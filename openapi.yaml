@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Zendesk MCP Server
+  version: 1.0.0
+  description: MCP-style server for providing contextual data to AI agents from Zendesk
+
+paths:
+  /context:
+    post:
+      summary: Get structured context for a Zendesk ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  description: The Zendesk ticket ID
+              required:
+                - ticket_id
+      responses:
+        '200':
+          description: Context response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  context:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum: [text, list]
+                        label:
+                          type: string
+                        value:
+                          type: [string, array, object]
+                  prompt_guidance:
+                    type: object
+                    properties:
+                      usage:
+                        type: string
+                      examples:
+                        type: array
+                        items:
+                          type: string
+
+  /meta:
+    get:
+      summary: Returns metadata about the MCP API including schemas
+      responses:
+        '200':
+          description: Metadata schema definition
+          content:
+            application/json:
+              schema:
+                type: object
+
+

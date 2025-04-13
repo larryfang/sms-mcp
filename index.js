@@ -1,9 +1,12 @@
 const express = require('express');
+const { OpenAI } = require('openai');
+
+
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
-
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const app = express();
 app.use(express.json());
 
@@ -189,16 +192,58 @@ app.post('/webhook/delivery', (req, res) => {
 });
 
 // 📩 /webhook/reply — log inbound SMS replies
-app.post('/webhook/reply', (req, res) => {
-  console.log('📩 Reply webhook received:', req.body);
+app.post('/webhook/reply', async (req, res) => {
   try {
-    logWebhookEvent('reply', req.body);
-    res.status(200).send('OK');
+    const { source_number, reply_content } = req.body;
+
+    console.log("📩 Incoming SMS:", { from: source_number, text: reply_content });
+
+    // 1. Call GPT to generate reply
+    const gptResponse = await openai.chat.completions.create({
+      model: "gpt-4-0613",
+      messages: [
+        {
+          role: "system",
+          content: "You're a friendly SMS assistant. Respond casually and clearly to incoming customer messages."
+        },
+        {
+          role: "user",
+          content: reply_content
+        }
+      ]
+    });
+
+    const reply = gptResponse.choices[0].message.content.trim();
+    console.log("🤖 GPT reply:", reply);
+
+    // 2. Send the reply using your own /send endpoint
+    await axios.post(`${process.env.MCP_SERVER_URL}/send`, {
+      messages: [
+        {
+          destination_number: source_number,
+          content: reply,
+          format: "SMS",
+          delivery_report: true,
+          source_number: "+61407145593" 
+        }
+      ]
+    });
+
+    // Optional: log to file if desired
+    logWebhookEvent("reply_auto", {
+      source_number,
+      reply_content,
+      auto_reply: reply
+    });
+
+    res.status(200).send("Reply processed and auto-responded");
+
   } catch (err) {
-    console.error('Error logging reply:', err);
-    res.status(500).send('Failed to log reply');
+    console.error("❌ Error auto-replying to SMS:", err.message);
+    res.status(500).send("Failed to auto-reply");
   }
 });
+
 app.get('/dashboard', (req, res) => {
   const file = path.join(__dirname, 'webhook-log.json');
 

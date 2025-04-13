@@ -45,12 +45,12 @@ API_TOKEN=your_protected_token
 
 ## 🧪 Local Testing
 
-Install deps:
+Install dependencies:
 ```bash
 npm install
 ```
 
-Start locally:
+Start servers locally:
 ```bash
 node start-all.js
 ```
@@ -62,14 +62,31 @@ Visit:
 
 ---
 
+## 🐳 Docker Deployment
+
+### Build and run locally with Docker
+
+```bash
+docker build -t mcp-sms .
+docker run -p 3000:3000 -p 4000:4000 --env-file .env mcp-sms
+```
+
+### Required Ports
+- `3000` for MCP context + webhook server
+- `4000` for GPT chat API
+
+Make sure `.env` exists in the same directory.
+
+---
+
 ## 🚀 Deployment to Railway
 
-1. Push code to GitHub
-2. Go to [https://railway.app](https://railway.app)
-3. Create new project → **Deploy from GitHub**
-4. Railway auto-detects your `Dockerfile`
-5. Set env vars in **Variables** tab
-6. Done ✅
+1. Push your code to GitHub
+2. Visit [https://railway.app](https://railway.app)
+3. Create a **new project** → Deploy from GitHub
+4. Railway will auto-detect the `Dockerfile`
+5. Add all `.env` variables in the **Variables** tab
+6. Deploy and monitor logs
 
 ---
 
@@ -93,19 +110,19 @@ Triggers:
 
 ---
 
-## 🔐 Security & Limits
+## 🔐 Security & Rate Limiting
 
-- All routes require: `Authorization: Bearer <API_TOKEN>`
-- Rate limited to 30 requests/min per IP (via express-rate-limit)
+- Requires `Authorization: Bearer <API_TOKEN>` on all routes
+- Limited to **30 requests per minute per IP**
 
 ---
 
 ## 🧠 Future Ideas
 
-- Auto-reply via `/webhook/reply` using GPT
-- Redis cache for faster context access
-- LangChain integration
-- GPT-4o voice/text in chat-ui
+- 🔁 GPT auto-replies to incoming SMS via `/webhook/reply`
+- 📥 Redis cache layer for `/context`
+- 🔌 LangChain tools support
+- 🧑‍💻 Admin UI to view/send messages manually
 
 ---
 

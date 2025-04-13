@@ -1,178 +1,114 @@
-# Zendesk MCP Server (Model Context Protocol)
+# 📦 AI-Powered MCP Server (MessageMedia + OpenAI)
 
-This project is a lightweight, AI-native MCP (Model Context Protocol) server that integrates with Zendesk's REST APIs. It allows GPT-based AI agents (e.g. OpenAI, LangChain) to fetch real-time customer and organization context dynamically.
+This project is a full-stack AI-native SMS assistant built around the Model Context Protocol (MCP). It integrates:
 
----
-
-## Features
-
-- Accepts `ticket_id`, `user_id`, or `organization_id`
-- Fetches user, org, and ticket context from Zendesk
-- Returns:
-  - `summary`: human-readable LLM-friendly summary
-  - `prompt_context`: single-line LLM embedding string
-  - `context`: structured blocks (text, list)
-  - `prompt_guidance`: usage instructions and few-shot examples
-- Exposes:
-  - `/context`: main context API
-  - `/meta`: MCP schema metadata
-  - `/function-schema`: OpenAI function-compatible definition
-- Fully Dockerized and deployable
-- Compatible with GPT-4 function calling
+- ✅ GPT-4 function calling
+- ✅ MessageMedia SMS API (send, receive, delivery reports)
+- ✅ Express-based webhook + chat server
+- ✅ `/context` endpoint for AI memory
+- ✅ HTML UI, OpenAI router, and message log dashboard
+- ✅ GitHub + Railway-compatible Docker deployment
 
 ---
 
-## Getting Started
+## 📁 Project Structure
 
-### 1. Clone and install dependencies
+```
+├── index.js             # MCP API server (context, send, webhooks)
+├── openai-router.js     # GPT interface w/ function calling
+├── start-all.js         # Starts both servers (for Docker)
+├── webhook-log.json     # Logs delivery + reply events
+├── conversations/       # Per-user GPT conversation logs
+├── chat-ui.html         # Simple browser-based chatbot
+├── Dockerfile           # Deployment container
+├── .env                 # Environment variables (NOT committed)
+```
+
+---
+
+## ⚙️ .env File Format
+
+Create a `.env` file like this:
+
+```
+MESSAGE_API_KEY=your_api_key
+MESSAGE_API_SECRET=your_secret
+MESSAGE_BASE_URL=https://api.messagemedia.com
+OPENAI_API_KEY=your_openai_key
+MCP_SERVER_URL=http://localhost:3000
+CHAT_PORT=4000
+PORT=3000
+API_TOKEN=your_protected_token
+```
+
+---
+
+## 🧪 Local Testing
+
+Install deps:
 ```bash
-git clone https://github.com/your-repo/zendesk-mcp-server
-cd zendesk-mcp-server
 npm install
 ```
 
-### 2. Set up `.env`
-```env
-ZENDESK_DOMAIN=your-subdomain.zendesk.com
-ZENDESK_EMAIL=your-email@yourdomain.com
-ZENDESK_API_TOKEN=your_zendesk_api_token
-PORT=3000
-OPENAI_API_KEY=your_openai_key
-MCP_SERVER_URL=http://mcp-server:3000
-CHAT_PORT=4000
-```
-
-### 3. Run Locally
+Start locally:
 ```bash
-node index.js
+node start-all.js
 ```
 
 Visit:
-- `http://localhost:3000/context`
-- `http://localhost:3000/meta`
-- `http://localhost:3000/function-schema`
+- [http://localhost:3000/dashboard](http://localhost:3000/dashboard)
+- [http://localhost:4000/chat](http://localhost:4000/chat)
+- Open `chat-ui.html` in browser
 
 ---
 
-## Docker Support
+## 🚀 Deployment to Railway
 
-### Build Image
-```bash
-docker build -t zendesk-mcp .
-```
-
-### Run Container
-```bash
-docker run -p 3000:3000 \
-  -e ZENDESK_DOMAIN=your-subdomain.zendesk.com \
-  -e ZENDESK_EMAIL=your-email \
-  -e ZENDESK_API_TOKEN=your-token \
-  zendesk-mcp
-```
-
-### Run with Docker Compose (Recommended for Multi-Service Setup)
-```bash
-docker-compose up --build
-```
-This starts both the MCP server and the OpenAI Chat API. Ensure you have `.env` configured as shown above.
+1. Push code to GitHub
+2. Go to [https://railway.app](https://railway.app)
+3. Create new project → **Deploy from GitHub**
+4. Railway auto-detects your `Dockerfile`
+5. Set env vars in **Variables** tab
+6. Done ✅
 
 ---
 
-## Function Calling with OpenAI (Example)
+## 🔁 GPT Functions Supported
 
-See `openai-client.js` for an example where:
-- GPT-4 automatically detects and calls `get_ticket_context`
-- The function calls your local MCP server
-- GPT writes a natural reply using the returned context
+### 1. get_sms_context
 
-### Simulating a Full Chat Conversation
+> Ask: “What’s the message history for +61412345678?”
 
-What you've tested so far is GPT-4 calling your MCP server using function calling, which works. Now you want to simulate a full conversation where:
+Returns:
+- Summary of last replies + delivery reports
+- Prompt-friendly context
 
-A user asks something natural like:
-> “Can you give me context for ticket 12345?”
+### 2. send_sms
 
-- GPT-4 figures out it needs to call `get_ticket_context`
-- GPT-4 calls your MCP server automatically
-- GPT-4 uses the result to reply in a natural, chat-style response
+> Ask: “Send an SMS to +61412345678 saying: your order is ready.”
 
-Let’s build exactly that — your own OpenAI Agent Loop that mimics how GPT-4 with tools (functions) will behave in production.
-
-### ✅ Step-by-Step: Full Chat-Based OpenAI Agent with Function Calling
-
-#### ✨ Final Output Looks Like:
-```plaintext
-User: Can you give me context for ticket 12345?
-GPT: Sure! Here's what I found:
-
-Alice Smith is a Premium customer under Acme Corp. She submitted 3 tickets recently. The latest ticket is titled "Login timeout" and is currently open.
-```
-
-### What This Script Does:
-- Sends a natural user message to GPT-4
-- GPT-4 detects your function, calls it with a `ticket_id`
-- You send that to your MCP server
-- Feed the MCP server’s context result back to GPT
-- GPT-4 writes a human-style response using the result
+Triggers:
+- MessageMedia API via `/send`
+- GPT reply in chat UI
 
 ---
 
-## Web Chat Interface + OpenAI Router API
+## 🔐 Security & Limits
 
-To demonstrate end-to-end usage with real input/output, this project includes:
-
-### 1. `/chat` API endpoint (`openai-router.js`)
-A Node.js API that accepts natural language messages, detects intent using GPT-4 + function calling, and uses the MCP server to fetch data and compose replies.
-
-#### 🔧 .env additions:
-```env
-OPENAI_API_KEY=your_openai_key
-MCP_SERVER_URL=http://mcp-server:3000
-CHAT_PORT=4000
-```
-
-#### ▶️ Run the API:
-```bash
-node openai-router.js
-```
-
-This starts a server at `http://localhost:4000/chat`
-
-### 2. `chat-ui.html`
-A simple HTML frontend to type user prompts and see AI-generated responses with Zendesk context.
-
-#### 🧪 Example Questions:
-- Who is the user for ticket 12345?
-- Tell me about organization 78901
-- How many tickets has user 112233 opened?
-
-#### 💬 Usage
-- Open `chat-ui.html` in a browser
-- Ensure the `/chat` endpoint is running with CORS enabled
-- Ask questions and see the result appear naturally
-
-#### 🔐 Note
-Make sure you install and enable CORS in `openai-router.js`:
-```js
-const cors = require('cors');
-app.use(cors());
-```
+- All routes require: `Authorization: Bearer <API_TOKEN>`
+- Rate limited to 30 requests/min per IP (via express-rate-limit)
 
 ---
 
-## Future Enhancements
+## 🧠 Future Ideas
 
-- LangChain tool compatibility
-- Redis caching layer
-- Rate limiting
-- More context types: `/orders`, `/billing`, `/subscriptions`
-
----
-
-## License
-MIT
+- Auto-reply via `/webhook/reply` using GPT
+- Redis cache for faster context access
+- LangChain integration
+- GPT-4o voice/text in chat-ui
 
 ---
 
-## Author
-Your Name — [@yourhandle](https://github.com/yourhandle)
+## 👨‍💻 Author
+
+Built by @larryfang with ❤️

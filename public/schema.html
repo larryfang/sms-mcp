@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>MCP Schema Viewer</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #f9f9f9; }
+    h1 { margin-bottom: 0.5rem; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+    pre { background: #fff; border: 1px solid #ddd; padding: 1rem; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>📐 MCP Schema Viewer</h1>
+  <h2>/meta</h2>
+  <pre id="meta">Loading...</pre>
+
+  <h2>/function-schema</h2>
+  <pre id="functions">Loading...</pre>
+
+  <script>
+    async function loadSchema() {
+      const base = location.origin;
+      const [meta, functions] = await Promise.all([
+        fetch(base + '/meta').then(r => r.json()),
+        fetch(base + '/function-schema').then(r => r.json())
+      ]);
+
+      document.getElementById('meta').textContent = JSON.stringify(meta, null, 2);
+      document.getElementById('functions').textContent = JSON.stringify(functions, null, 2);
+    }
+
+    loadSchema();
+  </script>
+</body>
+</html>

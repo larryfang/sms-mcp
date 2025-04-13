@@ -7,6 +7,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'public')));
 const PORT = process.env.PORT || 3000;
 
 // 🔐 Auth header
@@ -68,6 +69,18 @@ app.post('/send', async (req, res) => {
   }
 });
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/version', (req, res) => {
+  res.json({
+    name: "message-media-mcp-server",
+    version: "1.0.0",
+    description: "AI-native MCP server for SMS context and delivery",
+    timestamp: new Date().toISOString()
+  });
+});
 
 
 // 🗃️ Webhook storage

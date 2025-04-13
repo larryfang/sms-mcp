@@ -443,5 +443,201 @@
     "reply_content": "$moContent",
     "source_number": "+61413868683",
     "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:12.874Z",
+    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:12.885Z",
+    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:13.939Z",
+    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:36.040Z",
+    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://nxt.to/3bHaKta to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:36.054Z",
+    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Where_is_my_order_ to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-13T08:00:37.073Z",
+    "source_number": "+61413868683",
+    "reply_content": "Where is my order ",
+    "auto_reply": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
+    "intent": "inquiry_shipping"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:37.188Z",
+    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://nxt.to/3bHaKta to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:38.032Z",
+    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:38.048Z",
+    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:00:38.127Z",
+    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:08:47.786Z",
+    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:08:47.792Z",
+    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:08:49.864Z",
+    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Intent",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:05.875Z",
+    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://nxt.to/2BCicwi to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:05.894Z",
+    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Where's_my_order_ to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-13T08:09:06.358Z",
+    "source_number": "+61413868683",
+    "reply_content": "Where's my order ",
+    "auto_reply": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
+    "intent": "inquiry_shipping"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:06.809Z",
+    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:06.816Z",
+    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:06.983Z",
+    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Please access https://nxt.to/2BCicwi to finish your request",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-13T08:09:07.936Z",
+    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
+    "reply_content": "$moContent",
+    "source_number": "+61413868683",
+    "destination_number": "$destinationAddress"
   }
 ]

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>SMS Inbox Viewer</title>
+  <style>
+    body { font-family: sans-serif; padding: 1rem; background: #f5f5f5; }
+    h1 { font-size: 1.4rem; }
+    .chat { margin-top: 1rem; }
+    .msg { background: #fff; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .user { color: #444; }
+    .bot { color: #007acc; }
+    .intent { font-size: 0.8rem; color: #888; }
+  </style>
+</head>
+<body>
+  <h1>📥 SMS Inbox</h1>
+  <label>Phone Number:</label>
+  <input id="phone" placeholder="+614..." />
+  <button onclick="load()">View</button>
+
+  <div class="chat" id="chat"></div>
+
+  <script>
+    async function load() {
+      const number = document.getElementById('phone').value;
+      const url = `/conversations/${number}.json`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const chat = document.getElementById('chat');
+      chat.innerHTML = '';
+      for (let entry of data) {
+        const div = document.createElement('div');
+        div.className = 'msg';
+
+        div.innerHTML = `
+          <div><strong class="${entry.role}">${entry.role}:</strong> ${entry.message}</div>
+          <div class="intent">${entry.timestamp} ${entry.intent ? '— Intent: ' + entry.intent : ''}</div>
+        `;
+        chat.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>

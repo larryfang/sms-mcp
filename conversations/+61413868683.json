@@ -1,0 +1,134 @@
+[
+  {
+    "timestamp": "2025-04-13T08:00:12.876Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:12.887Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:13.940Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:36.042Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:36.056Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:37.077Z",
+    "role": "user",
+    "message": "Where is my order ",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:37.079Z",
+    "role": "assistant",
+    "message": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
+    "intent": "inquiry_shipping"
+  },
+  {
+    "timestamp": "2025-04-13T08:00:37.190Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:38.033Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:38.050Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:00:38.129Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:08:47.787Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:08:47.793Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:08:49.865Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:05.877Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:05.896Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:06.361Z",
+    "role": "user",
+    "message": "Where's my order ",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:06.363Z",
+    "role": "assistant",
+    "message": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
+    "intent": "inquiry_shipping"
+  },
+  {
+    "timestamp": "2025-04-13T08:09:06.811Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:06.817Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:06.985Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-13T08:09:07.939Z",
+    "role": "user",
+    "message": "$moContent",
+    "intent": null
+  }
+]

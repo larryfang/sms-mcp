@@ -11,6 +11,8 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/conversations', express.static(path.join(__dirname, 'conversations')));
+
 const PORT = process.env.PORT || 3000;
 
 // 🔐 Auth header
@@ -89,20 +91,7 @@ app.get('/version', (req, res) => {
 // 🗃️ Webhook storage
 const webhookLogPath = path.join(__dirname, 'webhook-log.json');
 
-function logWebhookEvent(type, data) {
-  const existing = fs.existsSync(webhookLogPath)
-    ? JSON.parse(fs.readFileSync(webhookLogPath, 'utf8'))
-    : [];
 
-  const entry = {
-    type,
-    received_at: new Date().toISOString(),
-    ...data
-  };
-
-  existing.push(entry);
-  fs.writeFileSync(webhookLogPath, JSON.stringify(existing, null, 2));
-}
 app.post('/context', async (req, res) => {
   const { phone_number } = req.body;
 
@@ -178,6 +167,63 @@ app.post('/context', async (req, res) => {
     res.status(500).json({ error: "Failed to generate context" });
   }
 });
+function saveConversation(phone, role, message, intent) {
+  if (!phone) return;
+
+  const dir = path.join(__dirname, 'conversations');
+  const filePath = path.join(dir, `${phone}.json`);
+
+  try {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    let history = [];
+    if (fs.existsSync(filePath)) {
+      history = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    }
+
+    history.push({
+      timestamp: new Date().toISOString(),
+      role,
+      message,
+      intent: intent || null
+    });
+
+    fs.writeFileSync(filePath, JSON.stringify(history, null, 2));
+  } catch (err) {
+    console.error('Failed to save conversation:', err.message);
+  }
+}
+function logWebhookEvent(type, data) {
+  const file = path.join(__dirname, 'webhook-log.json');
+
+  try {
+    let log = [];
+    if (fs.existsSync(file)) {
+      log = JSON.parse(fs.readFileSync(file, 'utf8'));
+    }
+
+    log.push({
+      type,
+      timestamp: new Date().toISOString(),
+      ...data
+    });
+
+    fs.writeFileSync(file, JSON.stringify(log, null, 2));
+  } catch (err) {
+    console.error('❌ Failed to log webhook event:', err.message);
+  }
+
+  // ALSO: Save message content to conversation log if applicable
+  const phone = data?.source_number;
+  if (phone && (data.reply_content || data.auto_reply)) {
+    if (data.reply_content) {
+      saveConversation(phone, 'user', data.reply_content);
+    }
+    if (data.auto_reply) {
+      saveConversation(phone, 'assistant', data.auto_reply, data.intent);
+    }
+  }
+}
+
 
 // 📬 /webhook/delivery — log delivery status updates
 app.post('/webhook/delivery', (req, res) => {
@@ -198,13 +244,13 @@ app.post('/webhook/reply', async (req, res) => {
 
     console.log("📩 Incoming SMS:", { from: source_number, text: reply_content });
 
-    // 1. Call GPT to generate reply
+    // 1. Generate the GPT reply
     const gptResponse = await openai.chat.completions.create({
       model: "gpt-4-0613",
       messages: [
         {
           role: "system",
-          content: "You're a friendly SMS assistant. Respond casually and clearly to incoming customer messages."
+          content: "You're a helpful and friendly SMS assistant. Reply casually and clearly to customers."
         },
         {
           role: "user",
@@ -216,33 +262,51 @@ app.post('/webhook/reply', async (req, res) => {
     const reply = gptResponse.choices[0].message.content.trim();
     console.log("🤖 GPT reply:", reply);
 
-    // 2. Send the reply using your own /send endpoint
+    // 2. Classify intent
+    const classify = await openai.chat.completions.create({
+      model: "gpt-4-0613",
+      messages: [
+        {
+          role: "system",
+          content: "Classify the user's message into one of: inquiry_shipping, complaint_product, confirm_receipt, cancel_order, other. Respond with just the label."
+        },
+        {
+          role: "user",
+          content: reply_content
+        }
+      ]
+    });
+
+    const intent = classify.choices[0].message.content.trim();
+    console.log("🔎 GPT intent:", intent);
+
+    // 3. Send the reply back via MessageMedia
     await axios.post(`${process.env.MCP_SERVER_URL}/send`, {
       messages: [
         {
           destination_number: source_number,
           content: reply,
           format: "SMS",
-          delivery_report: true,
-          source_number: "+61407145593" 
+          delivery_report: true
         }
       ]
     });
 
-    // Optional: log to file if desired
+    // 4. Log the interaction with intent
     logWebhookEvent("reply_auto", {
       source_number,
       reply_content,
-      auto_reply: reply
+      auto_reply: reply,
+      intent
     });
 
     res.status(200).send("Reply processed and auto-responded");
-
   } catch (err) {
     console.error("❌ Error auto-replying to SMS:", err.message);
     res.status(500).send("Failed to auto-reply");
   }
 });
+
 
 app.get('/dashboard', (req, res) => {
   const file = path.join(__dirname, 'webhook-log.json');

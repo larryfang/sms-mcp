@@ -238,6 +238,53 @@ app.get('/dashboard', (req, res) => {
   res.send(html);
 });
 
+// MCP schema metadata
+app.get('/meta', (req, res) => {
+  res.json({
+    service: "messagemedia.sms",
+    description: "SMS history and delivery context for phone numbers",
+    context_types: ["phone_number"],
+    capabilities: ["send_sms", "get_sms_context"]
+  });
+});
+
+// OpenAI-compatible function schema
+app.get('/function-schema', (req, res) => {
+  res.json([
+    {
+      name: "get_sms_context",
+      description: "Fetch SMS context for a phone number",
+      parameters: {
+        type: "object",
+        properties: {
+          phone_number: {
+            type: "string",
+            description: "Phone number to fetch context for (E.164)"
+          }
+        },
+        required: ["phone_number"]
+      }
+    },
+    {
+      name: "send_sms",
+      description: "Send an SMS to a user",
+      parameters: {
+        type: "object",
+        properties: {
+          destination_number: {
+            type: "string",
+            description: "Recipient's phone number in E.164 format"
+          },
+          content: {
+            type: "string",
+            description: "Text message content"
+          }
+        },
+        required: ["destination_number", "content"]
+      }
+    }
+  ]);
+});
 
 
 // 🔊 Start server

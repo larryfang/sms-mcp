@@ -1,119 +1,162 @@
-# 🧠 AI-Powered MCP Server (MessageMedia + GPT-4)
 
-This project is a production-ready Model Context Protocol (MCP) server that enables real-time, AI-native SMS workflows using:
+# 📱 AI-Native SMS Assistant (V1)
 
-- 🧠 GPT-4 function calling
-- 📩 MessageMedia SMS API (send + receive)
-- 🧾 LLM-ready context generation
-- 💬 Per-user chat history
-- 📊 Webhook log viewer + chat UI
-- 🐳 Docker-ready deployment
+An AI-powered SMS assistant that integrates with MessageMedia to send, receive, and manage SMS conversations. Built with Node.js and OpenAI's GPT-4, it provides real-time context-aware messaging and a user-friendly dashboard.
 
 ---
 
-## 🧱 Architecture Overview (MCP Perspective)
+## 🚀 Features
 
-The MCP server acts as a **translator and orchestrator** between AI agents and real-world communication (SMS).
-
-It enables GPT to:
-
-- Fetch message history context (`get_sms_context`)
-- Send real outbound SMS (`send_sms`)
-- Interpret inbound replies and delivery status via webhooks
-
----
-
-### 📈 Architecture Diagram
-
-![MCP Diagram](A_flowchart_diagram_illustrates_a_Model_Context_Pr.png)
+- **Send SMS**: Send messages via the `/send` endpoint.
+- **Receive & Auto-Reply**: Handle incoming messages with GPT-generated responses.
+- **Contextual Insights**: Retrieve conversation context through the `/context` endpoint.
+- **Dashboard**: Visualize message logs and statuses.
+- **Chat Interface**: Interact with the assistant via a web-based chat UI.
+- **Function Schema**: OpenAI-compatible function schema for integration.
 
 ---
 
-## 🧠 Key Responsibilities of MCP Server
+## 🛠️ Installation
 
-- Normalize external system data into predictable schema
-- Allow structured bi-directional actions (send/retrieve)
-- Return:
-  - `summary`: human-readable history
-  - `prompt_context`: one-line GPT embed string
-  - `context`: structured blocks
-  - `prompt_guidance`: examples for GPT use
-- Be usable by GPT function calling, LangChain, or other AI agents
+1. **Clone the repository**:
 
----
+   ```bash
+   git clone https://github.com/yourusername/ai-sms-assistant.git
+   cd ai-sms-assistant
+   ```
 
-## 📁 Project Structure
+2. **Install dependencies**:
 
-```
-├── index.js             # MCP: /context, /send, webhook handlers
-├── openai-router.js     # GPT interface + function routing
-├── start-all.js         # Runs both servers in Docker
-├── webhook-log.json     # Webhook events from MessageMedia
-├── conversations/       # Saved GPT chats per phone number
-├── chat-ui.html         # In-browser GPT assistant
-├── Dockerfile           # Deployment config
-```
+   ```bash
+   npm install
+   ```
 
----
+3. **Configure environment variables**:
 
-## ⚙️ .env Configuration
+   Create a `.env` file in the root directory and add the following:
 
-```
-MESSAGE_API_KEY=your_api_key
-MESSAGE_API_SECRET=your_secret
-MESSAGE_BASE_URL=https://api.messagemedia.com
-OPENAI_API_KEY=your_openai_key
-PORT=3000
-CHAT_PORT=4000
-MCP_SERVER_URL=http://localhost:3000
-API_TOKEN=your_token_here
-```
+   ```env
+   OPENAI_API_KEY=your_openai_api_key
+   MESSAGE_API_KEY=your_messagemedia_api_key
+   MESSAGE_API_SECRET=your_messagemedia_api_secret
+   MESSAGE_BASE_URL=https://api.messagemedia.com
+   MCP_SERVER_URL=http://localhost:3000
+   ```
+
+4. **Start the server**:
+
+   ```bash
+   node index.js
+   ```
+
+   The server will be running at `http://localhost:3000`.
 
 ---
 
-## 🔁 GPT Functions Supported
+## 🧪 Usage
 
-### 1. `get_sms_context`
-Fetch message history from webhook log
-```json
-{ "phone_number": "+61412345678" }
-```
+- **Send SMS**:
 
-### 2. `send_sms`
-Trigger outbound SMS to a phone number
-```json
-{ "destination_number": "+61412345678", "content": "Hi there" }
-```
+  ```bash
+  POST /send
+  {
+    "messages": [
+      {
+        "destination_number": "+61400000000",
+        "content": "Hello, this is a test message."
+      }
+    ]
+  }
+  ```
 
----
+- **Retrieve Context**:
 
-## 🧪 Test Locally
+  ```bash
+  POST /context
+  {
+    "phone_number": "+61400000000"
+  }
+  ```
 
-```bash
-npm install
-node start-all.js
-```
+- **Access Dashboard**:
 
-- View logs: http://localhost:3000/dashboard
-- Use chat: http://localhost:4000/chat (via chat-ui.html)
-- Send request: `curl -X POST http://localhost:4000/chat ...`
+  Navigate to `http://localhost:3000/dashboard` to view message logs.
 
----
+- **Chat Interface**:
 
-## 🐳 Docker Support
-
-```bash
-docker build -t mcp-sms .
-docker run -p 3000:3000 -p 4000:4000 --env-file .env mcp-sms
-```
+  Open `http://localhost:3000/chat.html` in your browser to interact with the assistant.
 
 ---
 
-## ✅ Status
+## 📂 Project Structure
 
-✅ Ready for:
+- `index.js`: Main server file with route implementations.
+- `public/`: Static files including `chat.html`.
+- `conversations/`: Stored conversation logs per user.
+- `webhook-log.json`: Logs of incoming and outgoing messages.
 
-- Local testing
-- Real MessageMedia SMS traffic
-- GPT automation + message memory
-- Deployment to Render, Railway, or Fly.io
+---
+
+## 🏗️ Architecture
+
+### Overview
+
+The AI-Native SMS Assistant is designed to facilitate seamless SMS communication by integrating OpenAI's GPT-4 for intelligent responses and MessageMedia for message delivery.
+
+### Components
+
+1. **Express Server (`index.js`)**
+   - Endpoints: `/send`, `/context`, `/webhook/reply`, `/webhook/delivery`, `/dashboard`, `/meta`, `/function-schema`.
+
+2. **OpenAI Integration**
+   - Generates context-aware responses and classifies user intents.
+
+3. **MessageMedia Integration**
+   - Sends and receives SMS messages and delivery reports.
+
+4. **Chat Interface (`public/chat.html`)**
+   - Web-based interface for interacting with the assistant.
+
+### Data Flow
+
+- Sending Messages → via `/send`
+- Receiving & Auto-reply → via `/webhook/reply`
+- Context Retrieval → via `/context`
+- Logs UI → via `/dashboard`
+- Chat + Function Calls → via `/chat.html`
+
+---
+
+## 🎬 Demo Script
+
+### Duration: ~5 minutes
+
+#### ✅ Introduction
+
+"Welcome to the AI-Native SMS Assistant demo. Today, we'll showcase how this assistant streamlines SMS communications using OpenAI's GPT-4 and MessageMedia."
+
+#### ✅ Sending an SMS
+
+"We'll use the `/send` endpoint to dispatch a greeting to a user."
+
+#### ✅ Receiving and Auto-Replying
+
+"Simulate an incoming message. The assistant processes it and replies intelligently."
+
+#### ✅ Retrieving Conversation Context
+
+"Use the `/context` endpoint to view message history and delivery reports."
+
+#### ✅ Exploring the Dashboard
+
+"Visit `/dashboard` to explore message logs visually."
+
+#### ✅ Chat Interface
+
+"Interact naturally via `chat.html`. It detects phone numbers, triggers GPT tools, and shows results contextually."
+
+---
+
+## 📄 License
+
+MIT License

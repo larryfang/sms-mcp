@@ -226,5 +226,179 @@
     "message": "Hey there! It seems like your message might be incomplete or I might have missed some context. Can you provide more details so I can assist you better?",
     "source_number": "+61413868683",
     "destination": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-14T05:24:47.959Z",
+    "source_number": "+61413868683",
+    "reply_content": "I want to know my order hiatory",
+    "auto_reply": "Sure, I can help with that. However, I'm unable to access personal data, such as your order history, for privacy and security reasons. You can view your order details by logging into your online account or contacting the customer service team directly for the company you ordered from. They will be able to provide your order history.",
+    "intent": "other"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T05:24:48.140Z",
+    "message_id": "9bf2e00a-27af-42d1-bdf7-ae3fdb8ca3b3",
+    "message_time": "2025-04-14T05:24:47.967Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Sure, I can help with that. However, I'm unable to access personal data, such as your order history, for privacy and security reasons. You can view your order details by logging into your online account or contacting the customer service team directly for the company you ordered from. They will be able to provide your order history.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T05:24:49.151Z",
+    "message_id": "9bf2e00a-27af-42d1-bdf7-ae3fdb8ca3b3",
+    "message_time": "2025-04-14T05:24:47.967Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Sure, I can help with that. However, I'm unable to access personal data, such as your order history, for privacy and security reasons. You can view your order details by logging into your online account or contacting the customer service team directly for the company you ordered from. They will be able to provide your order history.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T05:24:49.167Z",
+    "message_id": "9bf2e00a-27af-42d1-bdf7-ae3fdb8ca3b3",
+    "message_time": "2025-04-14T05:24:47.967Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Sure, I can help with that. However, I'm unable to access personal data, such as your order history, for privacy and security reasons. You can view your order details by logging into your online account or contacting the customer service team directly for the company you ordered from. They will be able to provide your order history.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:19.699Z",
+    "message_id": "bd05496c-00f5-4235-b748-a152ef029f61",
+    "message_time": "2025-04-14T10:27:19.132Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:19.714Z",
+    "message_id": "bd05496c-00f5-4235-b748-a152ef029f61",
+    "message_time": "2025-04-14T10:27:19.132Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:20.705Z",
+    "message_id": "bd05496c-00f5-4235-b748-a152ef029f61",
+    "message_time": "2025-04-14T10:27:19.132Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-14T10:27:43.436Z",
+    "source_number": "+61413868683",
+    "reply_content": "Yes as always",
+    "auto_reply": "Of course! How can I assist you today?",
+    "intent": "other"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:44.249Z",
+    "message_id": "12d65798-5209-49a8-b1f8-0465b86263ba",
+    "message_time": "2025-04-14T10:27:43.527Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Of course! How can I assist you today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:44.269Z",
+    "message_id": "12d65798-5209-49a8-b1f8-0465b86263ba",
+    "message_time": "2025-04-14T10:27:43.527Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Of course! How can I assist you today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:27:45.253Z",
+    "message_id": "12d65798-5209-49a8-b1f8-0465b86263ba",
+    "message_time": "2025-04-14T10:27:43.527Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Of course! How can I assist you today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:28:57.740Z",
+    "message_id": "f9968f70-de16-4640-84d3-d73076f9ad56",
+    "message_time": "2025-04-14T10:28:57.069Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Your order has shipped.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:28:57.748Z",
+    "message_id": "f9968f70-de16-4640-84d3-d73076f9ad56",
+    "message_time": "2025-04-14T10:28:57.069Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Your order has shipped.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:28:58.723Z",
+    "message_id": "f9968f70-de16-4640-84d3-d73076f9ad56",
+    "message_time": "2025-04-14T10:28:57.069Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Your order has shipped.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-14T10:29:07.901Z",
+    "source_number": "+61413868683",
+    "reply_content": "Thanks ",
+    "auto_reply": "You're welcome! If you have any other questions or need further help, feel free to ask.",
+    "intent": "other"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:29:08.294Z",
+    "message_id": "44884aed-e375-4012-b874-8b53367d8bf8",
+    "message_time": "2025-04-14T10:29:07.991Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "You're welcome! If you have any other questions or need further help, feel free to ask.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:29:08.300Z",
+    "message_id": "44884aed-e375-4012-b874-8b53367d8bf8",
+    "message_time": "2025-04-14T10:29:07.991Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "You're welcome! If you have any other questions or need further help, feel free to ask.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T10:29:09.256Z",
+    "message_id": "44884aed-e375-4012-b874-8b53367d8bf8",
+    "message_time": "2025-04-14T10:29:07.991Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "You're welcome! If you have any other questions or need further help, feel free to ask.",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
   }
 ]

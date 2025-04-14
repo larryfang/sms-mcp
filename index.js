@@ -93,22 +93,94 @@ const webhookLogPath = path.join(__dirname, 'webhook-log.json');
 
 
 app.post('/context', async (req, res) => {
-  const { phone_number } = req.body;
+  const { phone_number, use_live_data = true } = req.body;
 
   if (!phone_number) {
     return res.status(400).json({ error: 'phone_number is required' });
   }
 
   try {
+    // ⏱️ Lookback period (last 7 days)
+    const endDate = new Date().toISOString();
+    const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+    if (use_live_data) {
+      const payload = { start_date: startDate, end_date: endDate };
+
+      const response = await messageAPI.post(
+        `/v2-preview/reporting/messages/detail`,
+        payload
+      );
+
+      const messages = response.data.messages || [];
+
+      const replies = messages.filter(
+        m => m.direction === 'MO' && m.source_address === phone_number
+      );
+
+      const deliveries = messages.filter(
+        m => m.direction === 'MT' && m.destination_address === phone_number
+      );
+
+      const lastReply = replies.at(-1);
+      const lastDelivery = deliveries.at(-1);
+
+      const context = [];
+
+      if (replies.length > 0) {
+        context.push({
+          type: "list",
+          label: "Recent Replies",
+          value: replies.slice(-3).map(r => ({
+            content: r.content || '[no content]',
+            date_received: r.timestamp
+          }))
+        });
+      }
+
+      if (deliveries.length > 0) {
+        context.push({
+          type: "list",
+          label: "Recent Delivery Reports",
+          value: deliveries.slice(-3).map(d => ({
+            status: d.status_description || 'unknown',
+            message_id: d.message_id,
+            date_received: d.timestamp
+          }))
+        });
+      }
+
+      const lastReplyText = lastReply?.content || "None";
+      const lastDeliveryStatus = lastDelivery?.status_description || "N/A";
+
+      const summary = `${phone_number} has ${replies.length} reply(ies) and ${deliveries.length} delivery report(s). Last reply: "${lastReplyText}" Last delivery status: ${lastDeliveryStatus}.`;
+
+      const prompt_context = `Phone ${phone_number}: Last status "${lastDeliveryStatus}", Last reply: "${lastReplyText}"`;
+
+      const prompt_guidance = {
+        usage: "Use this context to understand the customer's SMS interaction history.",
+        examples: [
+          `This customer replied "${lastReplyText}" after receiving 2 messages.`,
+          `${phone_number} has not replied yet, last delivery status was ${lastDeliveryStatus}.`
+        ]
+      };
+
+      return res.json({
+        summary,
+        prompt_context,
+        context,
+        prompt_guidance
+      });
+    }
+
+    // fallback: legacy local log mode
     const logFile = path.join(__dirname, 'webhook-log.json');
     if (!fs.existsSync(logFile)) {
       return res.status(200).json({ summary: 'No logs yet.', context: [] });
     }
 
     const logs = JSON.parse(fs.readFileSync(logFile, 'utf8'));
-    const filtered = logs.filter(entry =>
-      entry.source_number === phone_number
-    );
+    const filtered = logs.filter(entry => entry.source_number === phone_number);
 
     const replies = filtered.filter(e => e.type === 'reply');
     const deliveries = filtered.filter(e => e.type === 'delivery');
@@ -140,9 +212,10 @@ app.post('/context', async (req, res) => {
         }))
       });
     }
+
     const lastReplyText = lastReply?.reply_content || lastReply?.content || "None";
     const lastDeliveryStatus = lastDelivery?.status || "N/A";
-    
+
     const summary = `${phone_number} has ${replies.length} reply(ies) and ${deliveries.length} delivery report(s). Last reply: "${lastReplyText}" Last delivery status: ${lastDeliveryStatus}.`;
 
     const prompt_context = `Phone ${phone_number}: Last status "${lastDeliveryStatus}", Last reply: "${lastReplyText}"`;
@@ -150,23 +223,23 @@ app.post('/context', async (req, res) => {
     const prompt_guidance = {
       usage: "Use this context to understand the customer's SMS interaction history.",
       examples: [
-        `This customer replied "${lastReply?.content}" after receiving 2 messages.`,
-        `${phone_number} has not replied yet, last delivery status was ${lastDelivery?.status || 'unknown'}.`
+        `This customer replied "${lastReplyText}" after receiving 2 messages.`,
+        `${phone_number} has not replied yet, last delivery status was ${lastDeliveryStatus}.`
       ]
     };
 
-    res.json({
+    return res.json({
       summary,
       prompt_context,
       context,
       prompt_guidance
     });
-
   } catch (err) {
-    console.error("Error in /context:", err.message || err);
-    res.status(500).json({ error: "Failed to generate context" });
+    console.error("Error in /context:", err.response?.data || err.message || err);
+    return res.status(500).json({ error: "Failed to generate context" });
   }
 });
+
 function saveConversation(phone, role, message, intent) {
   if (!phone) return;
 
@@ -311,57 +384,99 @@ app.post('/webhook/reply', async (req, res) => {
 });
 
 
-app.get('/dashboard', (req, res) => {
-  const file = path.join(__dirname, 'webhook-log.json');
+app.get('/dashboard', async (req, res) => {
+  try {
+    const { phone, search } = req.query;
 
-  if (!fs.existsSync(file)) {
-    return res.send('<h2>No logs found</h2>');
+    const endDate = new Date().toISOString();
+    const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+    const payload = {
+      start_date: startDate,
+      end_date: endDate
+    };
+
+    const response = await messageAPI.post(
+      `/v2-preview/reporting/messages/detail`,
+      payload
+    );
+
+    let messages = response.data.messages || [];
+
+    // 🔍 Optional filters
+    if (phone) {
+      messages = messages.filter(m =>
+        m.source_address === phone || m.destination_address === phone
+      );
+    }
+
+    if (search) {
+      messages = messages.filter(m =>
+        (m.content || "").toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    const htmlRows = messages.map(entry => {
+      const type = entry.direction === 'MO' ? 'reply' : 'delivery';
+      const content = entry.content || '[no content]';
+      const phoneNum = entry.direction === 'MO' ? entry.source_address : entry.destination_address;
+      const status = entry.status_description || '-';
+      const received = entry.timestamp || '-';
+      const bg = type === 'reply' ? '#e6f7ff' : '#f9f9f9';
+
+      return `
+        <tr style="background:${bg}">
+          <td>${type}</td>
+          <td>${phoneNum}</td>
+          <td>${content}</td>
+          <td>${status}</td>
+          <td>${received}</td>
+        </tr>`;
+    }).join('');
+
+    const html = `
+      <html>
+        <head>
+          <title>📊 SMS Dashboard (Live)</title>
+          <style>
+            body { font-family: sans-serif; padding: 1rem; }
+            input { padding: 4px; margin-right: 10px; }
+            table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+            th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
+            th { background: #f0f0f0; }
+          </style>
+        </head>
+        <body>
+          <h2>📊 SMS Dashboard</h2>
+          <form method="GET" action="/dashboard">
+            <label>Filter by phone:</label>
+            <input type="text" name="phone" placeholder="+614..." value="${phone || ''}">
+            <label>Search:</label>
+            <input type="text" name="search" placeholder="message content" value="${search || ''}">
+            <button type="submit">Search</button>
+          </form>
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Phone</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+            ${htmlRows}
+          </table>
+        </body>
+      </html>
+    `;
+
+    res.send(html);
+  } catch (err) {
+    console.error("❌ Error in /dashboard:", err.response?.data || err.message);
+    res.status(500).send("Failed to load dashboard");
   }
-
-  const logs = JSON.parse(fs.readFileSync(file, 'utf8'));
-
-  const htmlRows = logs.map(entry => {
-    const color = entry.type === 'reply' ? '#e6f7ff' : '#f9f9f9';
-    const content = entry.reply_content || entry.message_content || '[no content]';
-    return `
-      <tr style="background:${color}">
-        <td>${entry.type}</td>
-        <td>${entry.source_number || '-'}</td>
-        <td>${content}</td>
-        <td>${entry.status || '-'}</td>
-        <td>${entry.received_at}</td>
-      </tr>`;
-  }).join('');
-
-  const html = `
-    <html>
-      <head>
-        <title>SMS Log Dashboard</title>
-        <style>
-          body { font-family: sans-serif; padding: 1rem; }
-          table { border-collapse: collapse; width: 100%; }
-          th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
-          th { background: #f0f0f0; }
-        </style>
-      </head>
-      <body>
-        <h2>📊 SMS Log Dashboard</h2>
-        <table>
-          <tr>
-            <th>Type</th>
-            <th>Phone</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Received At</th>
-          </tr>
-          ${htmlRows}
-        </table>
-      </body>
-    </html>
-  `;
-
-  res.send(html);
 });
+
+
 
 // MCP schema metadata
 app.get('/meta', (req, res) => {

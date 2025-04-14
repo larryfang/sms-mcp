@@ -1,57 +1,59 @@
-require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const { OpenAI } = require('openai');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const { OpenAI } = require('openai');
+require('dotenv').config();
 
 const app = express();
-app.use(express.json());
 app.use(cors());
-
-const PORT = process.env.CHAT_PORT || 4000;
-const MCP_BASE_URL = process.env.MCP_SERVER_URL || 'http://localhost:3000';
+app.use(express.json());
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// 🧠 Function definitions for GPT
-const functionDefinitions = [
+const tools = [
   {
-    name: "get_sms_context",
-    description: "Fetch message history and opt-out status for a phone number",
-    parameters: {
-      type: "object",
-      properties: {
-        phone_number: {
-          type: "string",
-          description: "Phone number in E.164 format (e.g. +61412345678)"
-        }
-      },
-      required: ["phone_number"]
+    type: "function",
+    function: {
+      name: "get_sms_context",
+      description: "Fetch SMS context for a phone number",
+      parameters: {
+        type: "object",
+        properties: {
+          phone_number: {
+            type: "string",
+            description: "Phone number to fetch SMS history (E.164 format)"
+          }
+        },
+        required: ["phone_number"]
+      }
     }
   },
   {
-    name: "send_sms",
-    description: "Send an SMS message to a phone number",
-    parameters: {
-      type: "object",
-      properties: {
-        destination_number: {
-          type: "string",
-          description: "Recipient's phone number in E.164 format"
+    type: "function",
+    function: {
+      name: "send_sms",
+      description: "Send an SMS to a user",
+      parameters: {
+        type: "object",
+        properties: {
+          destination_number: {
+            type: "string",
+            description: "Phone number to send the message to (E.164 format)"
+          },
+          content: {
+            type: "string",
+            description: "The message body to send"
+          }
         },
-        content: {
-          type: "string",
-          description: "Text message content to send"
-        }
-      },
-      required: ["destination_number", "content"]
+        required: ["destination_number", "content"]
+      }
     }
   }
 ];
 
-// 💾 Save conversation per number
+// Save chat logs to /conversations/<number>.json
 function saveConversation(phone, role, message) {
   if (!phone) return;
 
@@ -59,10 +61,7 @@ function saveConversation(phone, role, message) {
   const filePath = path.join(dir, `${phone}.json`);
 
   try {
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
-    }
-
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     let history = [];
     if (fs.existsSync(filePath)) {
       history = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -80,82 +79,113 @@ function saveConversation(phone, role, message) {
   }
 }
 
-// 🤖 POST /chat — natural message to GPT with function support
 app.post('/chat', async (req, res) => {
-  const userMessage = req.body.message;
-
   try {
-    // Step 1: Ask GPT if it wants to use a function
+    const userMessage = req.body.message || '';
+    const phoneMatch = userMessage.match(/\+61\d{8,}/);
+    const extractedPhone = phoneMatch ? phoneMatch[0] : null;
+
     const initial = await openai.chat.completions.create({
-      model: "gpt-4-0613",
-      messages: [{ role: "user", content: userMessage }],
-      functions: functionDefinitions,
-      function_call: "auto"
+      model: "gpt-4-1106-preview",
+      messages: [
+        { role: "system", content: "You are an AI assistant for SMS operations. Use tools if needed." },
+        { role: "user", content: userMessage }
+      ],
+      tools,
+      tool_choice: "auto"
     });
 
-    const message = initial.choices[0].message;
+    const toolCall = initial.choices[0].message.tool_calls?.[0];
+    const toolName = toolCall?.function?.name;
+    const args = toolCall ? JSON.parse(toolCall.function.arguments) : null;
 
-    if (!message.function_call) {
-      return res.json({ reply: message.content });
-    }
+    if (toolName === "get_sms_context") {
+      const contextResponse = await axios.post(
+        `${process.env.MCP_SERVER_URL || 'http://localhost:3000'}/context`,
+        { phone_number: args.phone_number, use_live_data: true },
+        {
+          headers: {
+            Authorization: req.headers.authorization
+          }
+        }
+      );
 
-    const { name, arguments: argsRaw } = message.function_call;
-    const args = JSON.parse(argsRaw);
-
-    let functionResponse;
-
-    // Step 2: Call MCP server
-    if (name === "get_sms_context") {
-      const mcpRes = await axios.post(`${MCP_BASE_URL}/context`, args);
-      functionResponse = mcpRes.data;
-    } else if (name === "send_sms") {
-      const sendRes = await axios.post(`${MCP_BASE_URL}/send`, {
+      const followup = await openai.chat.completions.create({
+        model: "gpt-4-1106-preview",
         messages: [
+          { role: "system", content: "You are an assistant with access to SMS history." },
+          { role: "user", content: userMessage },
+          initial.choices[0].message,
           {
-            destination_number: args.destination_number,
-            content: args.content,
-            format: "SMS",
-            delivery_report: true
+            role: "tool",
+            tool_call_id: toolCall.id,
+            name: toolCall.function.name,
+            content: JSON.stringify(contextResponse.data)
           }
         ]
       });
-      functionResponse = {
-        status: "Message sent",
-        message_id: sendRes.data.message_id,
-        destination_number: args.destination_number,
-        content: args.content
-      };
+
+      const reply = followup.choices[0].message.content.trim();
+      saveConversation(args.phone_number, 'user', userMessage);
+      saveConversation(args.phone_number, 'assistant', reply);
+
+      return res.json({
+        reply,
+        action: "get_sms_context",
+        phone_number: args.phone_number,
+        data: contextResponse.data
+      });
     }
 
-    // Step 3: Final GPT reply with function result
-    const final = await openai.chat.completions.create({
-      model: "gpt-4-0613",
-      messages: [
-        { role: "user", content: userMessage },
-        message,
+    if (toolName === "send_sms") {
+      const smsResponse = await axios.post(
+        `${process.env.MCP_SERVER_URL || 'http://localhost:3000'}/send`,
         {
-          role: "function",
-          name,
-          content: JSON.stringify(functionResponse)
+          messages: [
+            {
+              destination_number: args.destination_number,
+              content: args.content,
+              format: "SMS",
+              delivery_report: true
+            }
+          ]
         }
-      ]
+      );
+
+      const summary = `Message to ${args.destination_number} was sent successfully.`;
+      saveConversation(args.destination_number, 'user', userMessage);
+      saveConversation(args.destination_number, 'assistant', summary);
+
+      return res.json({
+        reply: summary,
+        action: "send_sms",
+        to: args.destination_number,
+        content: args.content,
+        status: "ok",
+        message_id: smsResponse.data?.message_id || null,
+        gpt_summary: summary
+      });
+    }
+
+    // No tool used
+    const reply = initial.choices[0].message.content.trim();
+    if (extractedPhone) {
+      saveConversation(extractedPhone, 'user', userMessage);
+      saveConversation(extractedPhone, 'assistant', reply);
+    }
+
+    return res.json({
+      reply,
+      action: "none"
     });
-
-    const reply = final.choices[0].message.content;
-
-    // Step 4: Save chat to history
-    const phone = args?.phone_number || args?.destination_number;
-    saveConversation(phone, 'user', userMessage);
-    saveConversation(phone, 'assistant', reply);
-
-    return res.json({ reply });
 
   } catch (err) {
     console.error("❌ Error in /chat:", err.response?.data || err.message);
-    return res.status(500).json({ error: "Chat pipeline failed" });
+    res.status(500).json({ error: "Chat error", details: err.message });
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🤖 OpenAI Chat API running at http://localhost:${PORT}/chat`);
+const port = process.env.CHAT_PORT || 4000;
+app.listen(port, () => {
+  console.log(`🤖 OpenAI Chat API running at http://localhost:${port}/chat`);
 });

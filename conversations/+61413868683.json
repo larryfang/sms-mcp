@@ -20,5 +20,91 @@
     "timestamp": "2025-04-14T05:22:02.365Z",
     "role": "assistant",
     "message": "The phone number +61413868683 has a history of 22 delivery reports but no replies. The last delivery status is not available, and there's no record of the last reply since the number has never responded to any messages."
+  },
+  {
+    "timestamp": "2025-04-14T05:24:47.962Z",
+    "role": "user",
+    "message": "I want to know my order hiatory",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-14T05:24:47.963Z",
+    "role": "assistant",
+    "message": "Sure, I can help with that. However, I'm unable to access personal data, such as your order history, for privacy and security reasons. You can view your order details by logging into your online account or contacting the customer service team directly for the company you ordered from. They will be able to provide your order history.",
+    "intent": "other"
+  },
+  {
+    "timestamp": "2025-04-14T08:11:28.140Z",
+    "role": "user",
+    "message": "what's the message history of +61413868683"
+  },
+  {
+    "timestamp": "2025-04-14T08:11:28.142Z",
+    "role": "assistant",
+    "message": "The phone number +61413868683 has no replies and 25 delivery reports. The status of the last delivery is not available, and no reply has been received from this number."
+  },
+  {
+    "timestamp": "2025-04-14T08:11:59.183Z",
+    "role": "user",
+    "message": "what's the message history for +61413868683"
+  },
+  {
+    "timestamp": "2025-04-14T08:11:59.185Z",
+    "role": "assistant",
+    "message": "The phone number +61413868683 has zero replies and 25 delivery reports. The last delivery status is not available."
+  },
+  {
+    "timestamp": "2025-04-14T10:27:43.439Z",
+    "role": "user",
+    "message": "Yes as always",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-14T10:27:43.440Z",
+    "role": "assistant",
+    "message": "Of course! How can I assist you today?",
+    "intent": "other"
+  },
+  {
+    "timestamp": "2025-04-14T10:28:31.833Z",
+    "role": "user",
+    "message": "How many messages has +61413868683 received?"
+  },
+  {
+    "timestamp": "2025-04-14T10:28:31.835Z",
+    "role": "assistant",
+    "message": "The phone number +61413868683 has received a total of 9 replies."
+  },
+  {
+    "timestamp": "2025-04-14T10:28:56.982Z",
+    "role": "user",
+    "message": "Send this to +61413868683: Your order has shipped."
+  },
+  {
+    "timestamp": "2025-04-14T10:28:56.984Z",
+    "role": "assistant",
+    "message": "Message to +61413868683 was sent successfully."
+  },
+  {
+    "timestamp": "2025-04-14T10:29:07.903Z",
+    "role": "user",
+    "message": "Thanks ",
+    "intent": null
+  },
+  {
+    "timestamp": "2025-04-14T10:29:07.905Z",
+    "role": "assistant",
+    "message": "You're welcome! If you have any other questions or need further help, feel free to ask.",
+    "intent": "other"
+  },
+  {
+    "timestamp": "2025-04-14T10:29:35.526Z",
+    "role": "user",
+    "message": "Get message context for +61413868683"
+  },
+  {
+    "timestamp": "2025-04-14T10:29:35.527Z",
+    "role": "assistant",
+    "message": "The phone number +61413868683 has a history of SMS interactions with 10 replies and 14 delivery reports. The last reply received from this number was \"Hello from sub account,\" indicating that the sent message reached a sub account associated with the main number. The most recent delivery status for a message sent to this number confirms it was successfully delivered. \n\nRecent replies from this number also include \"Hello back,\" which was sent twice on April 14, 2025, once at 04:58:44 and again at 04:42:44. Before these, \"Hello from sub account\" was also sent on the same day at 03:24:40.\n\nRegarding the delivery reports, the three latest messages sent to this number were all successfully delivered, with the most recent delivery report timestamped on April 14, 2025, at 04:57:16.\n\nThis information can be used to gauge the responsiveness of the number, understand the context of discussions, and assess the successful transmission of SMS communications. If further actions or follow-ups are anticipated, these details will inform the appropriate approach to communication with +61413868683."
   }
 ]

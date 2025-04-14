@@ -1,643 +1,230 @@
 [
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:20.960Z",
-    "message_id": "aeb78cb2-7b62-489a-9988-75d026192c04",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T04:57:17.196Z",
+    "message_id": "a71a5e9e-bc50-4dc6-ae8a-e8bd93d9c52f",
+    "message_time": "2025-04-14T04:57:16.827Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:20.984Z",
-    "message_id": "aeb78cb2-7b62-489a-9988-75d026192c04",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T04:57:17.204Z",
+    "message_id": "a71a5e9e-bc50-4dc6-ae8a-e8bd93d9c52f",
+    "message_time": "2025-04-14T04:57:16.827Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:21.029Z",
-    "message_id": "aeb78cb2-7b62-489a-9988-75d026192c04",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T04:57:18.223Z",
+    "message_id": "a71a5e9e-bc50-4dc6-ae8a-e8bd93d9c52f",
+    "message_time": "2025-04-14T04:57:16.827Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:29.548Z",
-    "message_id": "36ce2def-c65b-4f7a-b69f-ede3ca59cf25",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Reply_again to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T04:58:45.221Z",
+    "message_id": "a71a5e9e-bc50-4dc6-ae8a-e8bd93d9c52f",
+    "message_time": "2025-04-14T04:57:16.827Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply",
-    "received_at": "2025-04-13T04:02:30.285Z",
-    "reply_id": "c0537a5d-1bb8-45ea-8843-3e653becd717",
-    "reply_content": "Reply again",
-    "source_number": "+61413868683",
-    "destination_number": "+61407145593"
+    "destination": "+61428427954"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:30.545Z",
-    "message_id": "36ce2def-c65b-4f7a-b69f-ede3ca59cf25",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/jMPsKvR to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:04:54.315Z",
+    "message_id": "fbc21dee-d1a8-4c77-acc0-90408afc36f6",
+    "message_time": "2025-04-14T05:04:53.937Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:02:30.730Z",
-    "message_id": "36ce2def-c65b-4f7a-b69f-ede3ca59cf25",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/jMPsKvR to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:04:54.390Z",
+    "message_id": "fbc21dee-d1a8-4c77-acc0-90408afc36f6",
+    "message_time": "2025-04-14T05:04:53.937Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:14.998Z",
-    "message_id": "5cee0d78-e818-43ea-979e-597984e853ed",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:04:55.404Z",
+    "message_id": "fbc21dee-d1a8-4c77-acc0-90408afc36f6",
+    "message_time": "2025-04-14T05:04:53.937Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:15.010Z",
-    "message_id": "5cee0d78-e818-43ea-979e-597984e853ed",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:10:51.143Z",
+    "message_id": "81b75238-5b15-4199-9e15-3bc429c1d015",
+    "message_time": "2025-04-14T05:10:50.443Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:16.062Z",
-    "message_id": "5cee0d78-e818-43ea-979e-597984e853ed",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman again!",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:10:51.193Z",
+    "message_id": "81b75238-5b15-4199-9e15-3bc429c1d015",
+    "message_time": "2025-04-14T05:10:50.443Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply",
-    "received_at": "2025-04-13T04:11:30.201Z",
-    "reply_id": "22bdebc8-a5c1-4134-b866-5fdfab8dcd44",
-    "reply_content": "Reply again and again",
-    "source_number": "+61413868683",
-    "destination_number": "+61407145593"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:36.062Z",
-    "message_id": "93dc1e99-4710-4533-93ed-961d207a8a3d",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Reply_again_and_again to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:10:52.130Z",
+    "message_id": "81b75238-5b15-4199-9e15-3bc429c1d015",
+    "message_time": "2025-04-14T05:10:50.443Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan only",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:36.082Z",
-    "message_id": "93dc1e99-4710-4533-93ed-961d207a8a3d",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/dArgRRQ to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:14:03.693Z",
+    "message_id": "e61faa50-cccd-4b0f-882e-b753962e535a",
+    "message_time": "2025-04-14T05:14:03.219Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:11:36.145Z",
-    "message_id": "93dc1e99-4710-4533-93ed-961d207a8a3d",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/dArgRRQ to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:14:03.721Z",
+    "message_id": "e61faa50-cccd-4b0f-882e-b753962e535a",
+    "message_time": "2025-04-14T05:14:03.219Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:20:42.606Z",
-    "message_id": "653458d8-dbec-436c-94b0-424f560ef3b8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Your order is confirmed.",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:14:04.684Z",
+    "message_id": "e61faa50-cccd-4b0f-882e-b753962e535a",
+    "message_time": "2025-04-14T05:14:03.219Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:20:42.663Z",
-    "message_id": "653458d8-dbec-436c-94b0-424f560ef3b8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Your order is confirmed.",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:16:16.439Z",
+    "message_id": "699428de-89b5-41c1-8ab1-b3117edb3754",
+    "message_time": "2025-04-14T05:16:15.550Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:20:43.671Z",
-    "message_id": "653458d8-dbec-436c-94b0-424f560ef3b8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Your order is confirmed.",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:16:16.463Z",
+    "message_id": "699428de-89b5-41c1-8ab1-b3117edb3754",
+    "message_time": "2025-04-14T05:16:15.550Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply",
-    "received_at": "2025-04-13T04:20:58.822Z",
-    "reply_id": "b90a17b3-458c-4fc6-b4fb-0e21e3c0941b",
-    "reply_content": "I receive the order confirmation ",
-    "source_number": "+61413868683",
-    "destination_number": "+61407145593"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:21:01.146Z",
-    "message_id": "cf79ee7b-54aa-458b-8c04-f26dcdc4cffe",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/2m4ZEel to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:16:17.430Z",
+    "message_id": "699428de-89b5-41c1-8ab1-b3117edb3754",
+    "message_time": "2025-04-14T05:16:15.550Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Ethan is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:21:01.169Z",
-    "message_id": "cf79ee7b-54aa-458b-8c04-f26dcdc4cffe",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=I_receive_the_order_confirmation_ to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:37.575Z",
+    "message_id": "13408369-67a7-481d-8cb7-a400d54c7eeb",
+    "message_time": "2025-04-14T05:20:36.964Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T04:21:02.241Z",
-    "message_id": "cf79ee7b-54aa-458b-8c04-f26dcdc4cffe",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/2m4ZEel to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:37.593Z",
+    "message_id": "13408369-67a7-481d-8cb7-a400d54c7eeb",
+    "message_time": "2025-04-14T05:20:36.964Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T07:21:43.193Z",
-    "message_id": "4144d0e9-d8f1-4828-8873-cdeb10e1bc45",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Larry vs AI",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:38.591Z",
+    "message_id": "13408369-67a7-481d-8cb7-a400d54c7eeb",
+    "message_time": "2025-04-14T05:20:36.964Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:21:43.201Z",
-    "message_id": "4144d0e9-d8f1-4828-8873-cdeb10e1bc45",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Larry vs AI",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:21:44.216Z",
-    "message_id": "4144d0e9-d8f1-4828-8873-cdeb10e1bc45",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Larry vs AI",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "reply_auto",
-    "received_at": "2025-04-13T07:29:09.924Z",
+    "timestamp": "2025-04-14T05:20:48.152Z",
     "source_number": "+61413868683",
-    "reply_content": "Test automation ",
-    "auto_reply": "Hey there! Sure, I can help with test automation. It's a method in software testing where specialized tools are used to control the execution of tests. It's used to automate repetitive tasks, reduce testing times, and improve software quality. Can you tell me more about what you're looking for so I can assist you better?"
-  },
-  {
-    "type": "reply_auto",
-    "received_at": "2025-04-13T07:29:10.055Z",
-    "source_number": "+61413868683",
-    "reply_content": "Test automation ",
-    "auto_reply": "Hey there! Test automation is pretty cool. It's a method in software testing where specialized tools are used to control the execution of tests and the comparison of actual outcomes with predicted outcomes. This can give you faster results and requires less manual intervention. It's best for large-scale and long-term projects. If you need more insights or specifics, feel free to ask!"
+    "reply_content": "Who isn't",
+    "auto_reply": "Hey there! It seems like your message might be incomplete or I might have missed some context. Can you provide more details so I can assist you better?",
+    "intent": "other"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T07:29:10.302Z",
-    "message_id": "03b17474-b22f-4c11-b96e-da39538b7ad6",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Test_automation_ to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:48.489Z",
+    "message_id": "a3aba1ba-e825-4abf-aca5-5099f904a4be",
+    "message_time": "2025-04-14T05:20:48.291Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! It seems like your message might be incomplete or I might have missed some context. Can you provide more details so I can assist you better?",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T07:29:10.324Z",
-    "message_id": "03b17474-b22f-4c11-b96e-da39538b7ad6",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Test_automation_ to finish your request",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:49.495Z",
+    "message_id": "a3aba1ba-e825-4abf-aca5-5099f904a4be",
+    "message_time": "2025-04-14T05:20:48.291Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! It seems like your message might be incomplete or I might have missed some context. Can you provide more details so I can assist you better?",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   },
   {
     "type": "delivery",
-    "received_at": "2025-04-13T07:29:10.952Z",
-    "message_id": "e34ee87b-491c-4628-bb8f-0c21f1f921d8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey there! Sure, I can help with test automation. It's a method in software testing where specialized tools are used to control the execution of tests. It's used to automate repetitive tasks, reduce testing times, and improve software quality. Can you tell me more about what you're looking for so I can assist you better?",
-    "reply_content": "$moContent",
+    "timestamp": "2025-04-14T05:20:50.502Z",
+    "message_id": "a3aba1ba-e825-4abf-aca5-5099f904a4be",
+    "message_time": "2025-04-14T05:20:48.291Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! It seems like your message might be incomplete or I might have missed some context. Can you provide more details so I can assist you better?",
     "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:29:10.975Z",
-    "message_id": "e34ee87b-491c-4628-bb8f-0c21f1f921d8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey there! Sure, I can help with test automation. It's a method in software testing where specialized tools are used to control the execution of tests. It's used to automate repetitive tasks, reduce testing times, and improve software quality. Can you tell me more about what you're looking for so I can assist you better?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:29:12.065Z",
-    "message_id": "4ed41dd2-f8d9-45da-b780-dcb1e628f080",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey there! Test automation is pretty cool. It's a method in software testing where specialized tools are used to control the execution of tests and the comparison of actual outcomes with predicted outcomes. This can give you faster results and requires less manual intervention. It's best for large-scale and long-term projects. If you need more insights or specifics, feel free to ask!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:29:12.082Z",
-    "message_id": "4ed41dd2-f8d9-45da-b780-dcb1e628f080",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey there! Test automation is pretty cool. It's a method in software testing where specialized tools are used to control the execution of tests and the comparison of actual outcomes with predicted outcomes. This can give you faster results and requires less manual intervention. It's best for large-scale and long-term projects. If you need more insights or specifics, feel free to ask!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:37:08.404Z",
-    "message_id": "14878e6f-3ba3-4288-ab5c-713b1f865966",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "hi",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:37:08.412Z",
-    "message_id": "14878e6f-3ba3-4288-ab5c-713b1f865966",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "hi",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:39:11.431Z",
-    "message_id": "7dafc9f8-10e5-4556-aca2-462be29f98e8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:39:11.438Z",
-    "message_id": "7dafc9f8-10e5-4556-aca2-462be29f98e8",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello from Postman!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:46:22.524Z",
-    "message_id": "7e6f18e6-3d27-45f2-ae5c-49e31fb979e0",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "11",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:46:22.540Z",
-    "message_id": "7e6f18e6-3d27-45f2-ae5c-49e31fb979e0",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "11",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:46:23.564Z",
-    "message_id": "7e6f18e6-3d27-45f2-ae5c-49e31fb979e0",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "11",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply_auto",
-    "received_at": "2025-04-13T07:47:27.529Z",
-    "source_number": "+61413868683",
-    "reply_content": "Ok",
-    "auto_reply": "Hello! How can I assist you today?"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:28.263Z",
-    "message_id": "bae3e31e-1776-466f-b722-4718388bbc80",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello! How can I assist you today?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:28.269Z",
-    "message_id": "bae3e31e-1776-466f-b722-4718388bbc80",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello! How can I assist you today?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:29.348Z",
-    "message_id": "bae3e31e-1776-466f-b722-4718388bbc80",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hello! How can I assist you today?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:30.437Z",
-    "message_id": "c2d94d24-f505-493a-8137-00312c9ba618",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/UdgObUk to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:30.451Z",
-    "message_id": "c2d94d24-f505-493a-8137-00312c9ba618",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Ok to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "received_at": "2025-04-13T07:47:31.520Z",
-    "message_id": "c2d94d24-f505-493a-8137-00312c9ba618",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/UdgObUk to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:12.874Z",
-    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:12.885Z",
-    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:13.939Z",
-    "message_id": "32539375-5fbf-4a11-968e-5ad35f417066",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:36.040Z",
-    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/3bHaKta to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:36.054Z",
-    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Where_is_my_order_ to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply_auto",
-    "timestamp": "2025-04-13T08:00:37.073Z",
-    "source_number": "+61413868683",
-    "reply_content": "Where is my order ",
-    "auto_reply": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
-    "intent": "inquiry_shipping"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:37.188Z",
-    "message_id": "a070bd82-c426-4390-8492-069e3e117768",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/3bHaKta to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:38.032Z",
-    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:38.048Z",
-    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:00:38.127Z",
-    "message_id": "5c5e3bb3-cd2c-4ef3-b012-ad6dabe1827b",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hey! To check the status of your order, I'll need your order number. Could you please provide it?",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:08:47.786Z",
-    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:08:47.792Z",
-    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:08:49.864Z",
-    "message_id": "9c375ccd-6bbb-462e-b748-bd6fe2802ff1",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Intent",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:05.875Z",
-    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/2BCicwi to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:05.894Z",
-    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://chemistwarehouse.messagemedia.com/portal1?escript=Where's_my_order_ to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "reply_auto",
-    "timestamp": "2025-04-13T08:09:06.358Z",
-    "source_number": "+61413868683",
-    "reply_content": "Where's my order ",
-    "auto_reply": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
-    "intent": "inquiry_shipping"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:06.809Z",
-    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:06.816Z",
-    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:06.983Z",
-    "message_id": "654a5c16-3547-4373-a4a3-fcc1f72bab4e",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Please access https://nxt.to/2BCicwi to finish your request",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
-  },
-  {
-    "type": "delivery",
-    "timestamp": "2025-04-13T08:09:07.936Z",
-    "message_id": "b3977d68-308e-49ea-9c39-1310d3119cba",
-    "account_id": "WebTeamTestAccount0001",
-    "message_content": "Hi there! To look into your order status, I'll just need a bit more info. Could you please provide your order number or the email address you used to place the order? Thanks!",
-    "reply_content": "$moContent",
-    "source_number": "+61413868683",
-    "destination_number": "$destinationAddress"
+    "destination": "$destinationAddress"
   }
 ]

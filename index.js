@@ -240,7 +240,10 @@ app.post('/webhook/delivery', (req, res) => {
 // 📩 /webhook/reply — log inbound SMS replies
 app.post('/webhook/reply', async (req, res) => {
   try {
-    const { source_number, reply_content } = req.body;
+    console.log("the entire reply body",req.body);
+    const source_number = req.body.source_address;
+    const reply_content = req.body.reply_msg;
+
 
     console.log("📩 Incoming SMS:", { from: source_number, text: reply_content });
 

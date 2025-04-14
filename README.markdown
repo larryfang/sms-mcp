@@ -21,8 +21,8 @@ An AI-powered SMS assistant that integrates with MessageMedia to send, receive, 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/ai-sms-assistant.git
-   cd ai-sms-assistant
+   git clone https://github.com/larryfang/sms-mcp
+   cd sms-mcp
    ```
 
 2. **Install dependencies**:

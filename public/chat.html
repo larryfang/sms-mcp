@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,56 +27,18 @@
   <div id="chat-box">
     <h2>🧠 GPT SMS Assistant</h2>
 
-    <label><strong>Example Prompts:</strong></label>
-    <select id="examples">
-      <option value="">-- Select a prompt --</option>
-      <option value="Get message context for +61413868683">Get message context for +61413868683</option>
-      <option value="Send this to +61413868683: Your order has shipped.">Send a message</option>
-      <option value="How many messages has +61413868683 received?">Count messages</option>
-    </select>
-
-    <div id="messages"></div>
-
     <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ask me to send or retrieve SMS..." list="phone-suggestions" />
-      <datalist id="phone-suggestions"></datalist>
+      <input type="text" id="user-input" placeholder="Ask about SMS history or send a message..." />
       <button type="submit">Send</button>
     </form>
+
+    <div id="messages"></div>
   </div>
 
   <script>
     const form = document.getElementById("chat-form");
     const input = document.getElementById("user-input");
     const messages = document.getElementById("messages");
-    const exampleDropdown = document.getElementById("examples");
-    const phoneList = document.getElementById("phone-suggestions");
-
-    async function loadPhoneSuggestions() {
-      try {
-        const res = await fetch("/conversations/");
-        const html = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const links = Array.from(doc.querySelectorAll("a"))
-          .map(a => a.getAttribute("href"))
-          .filter(href => href.endsWith(".json"))
-          .map(name => name.replace(".json", ""));
-
-        phoneList.innerHTML = links
-          .map(phone => `<option value="${phone}">`)
-          .join('');
-      } catch (err) {
-        console.warn("⚠️ Could not load phone suggestions:", err);
-      }
-    }
-
-    loadPhoneSuggestions();
-
-    exampleDropdown.addEventListener("change", () => {
-      if (exampleDropdown.value) {
-        input.value = exampleDropdown.value;
-      }
-    });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -95,18 +58,8 @@
         const data = await response.json();
         appendMessage("Assistant", data.reply, "assistant");
 
-        if (data.action && data.action !== "none") {
-          let meta = `🛠 Action: ${data.action}`;
-          if (data.to) meta += `\n📞 To: ${data.to}`;
-          if (data.content) meta += `\n💬 Content: ${data.content}`;
-          if (data.status) meta += `\n📦 Status: ${data.status}`;
-          if (data.message_id) meta += `\n🧾 Message ID: ${data.message_id}`;
-          if (data.phone_number) meta += `\n📞 Phone: ${data.phone_number}`;
-          appendMeta(meta);
-        }
-
         if (data.action === "get_sms_context" && data.data?.context) {
-          renderContextTimeline(data.data.context);
+          renderContext(data.data.context);
         }
 
       } catch (err) {
@@ -122,61 +75,56 @@
       messages.scrollTop = messages.scrollHeight;
     }
 
-    function appendMeta(metaText) {
-      const div = document.createElement("div");
-      div.className = "meta";
-      div.textContent = metaText;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
-
-    function renderContextTimeline(contextBlocks) {
+    function renderContext(contextBlocks) {
       const combined = [];
 
       contextBlocks.forEach(block => {
-        const type = block.label.toLowerCase().includes("reply") ? "reply" : "delivery";
+        const label = block.label.toLowerCase();
+        const type = label.includes("reply") ? "reply" : "delivery";
+
         (block.value || []).forEach(entry => {
-          const time = entry.date_received || entry.timestamp || "N/A";
-          const content = entry.content || entry.status || "[no content]";
+          const content = entry.content || entry.reply_content || entry.status || "[no content]";
+          const timestamp = entry.date_received || entry.timestamp || "N/A";
+          const id = entry.message_id || "";
           combined.push({
-            label: block.label,
             type,
-            time,
-            content
+            content,
+            timestamp,
+            id
           });
         });
       });
 
-      combined.sort((a, b) => new Date(a.time) - new Date(b.time));
+      combined.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
       const wrapper = document.createElement("div");
       wrapper.className = "context-block";
 
       const toggle = document.createElement("div");
       toggle.className = "context-label";
-      toggle.textContent = "📅 Message Timeline ▼";
+      toggle.textContent = "📅 Timeline ▼";
       toggle.style.cursor = "pointer";
 
       const timeline = document.createElement("div");
       timeline.className = "timeline";
 
-      combined.forEach(msg => {
-        const item = document.createElement("div");
-        item.className = "timeline-item " + msg.type;
-        item.textContent = `[${msg.time}] (${msg.type}) → ${msg.content}`;
-        timeline.appendChild(item);
+      combined.forEach(item => {
+        const line = document.createElement("div");
+        line.className = `timeline-item ${item.type}`;
+        line.textContent = `[${item.timestamp}] (${item.type}) → ${item.content}`;
+        if (item.id) line.textContent += ` | ID: ${item.id}`;
+        timeline.appendChild(line);
       });
 
       toggle.addEventListener("click", () => {
         timeline.classList.toggle("hidden");
-        toggle.textContent = timeline.classList.contains("hidden")
-          ? "📅 Message Timeline ▶"
-          : "📅 Message Timeline ▼";
+        toggle.textContent = timeline.classList.contains("hidden") ? "📅 Timeline ▶" : "📅 Timeline ▼";
       });
 
       wrapper.appendChild(toggle);
       wrapper.appendChild(timeline);
       messages.appendChild(wrapper);
+      messages.scrollTop = messages.scrollHeight;
     }
   </script>
 </body>

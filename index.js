@@ -44,35 +44,21 @@ app.post('/send', async (req, res) => {
   }
 
   try {
-    const response = await axios.post(
-      `${process.env.MESSAGE_BASE_URL}/v1/messages`,
-      { messages },
-      {
-        headers: {
-          Authorization: authHeader,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          ...(process.env.MESSAGE_SUB_ACCOUNT_ID && {
-            Account: process.env.MESSAGE_SUB_ACCOUNT_ID
-          })
-        }
-      }
-    );
+    const response = await messageAPI.post('/v1/messages', { messages });
 
-    return res.status(200).json({
+    res.status(200).json({
       message: 'SMS sent successfully!',
-      message_id: response.data.messages[0]?.message_id,
       response: response.data
     });
-
   } catch (err) {
     console.error('❌ Error sending SMS:', err.response?.data || err.message);
-    return res.status(500).json({
+    res.status(500).json({
       error: 'Failed to send SMS',
       details: err.response?.data || err.message
     });
   }
 });
+
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -114,13 +100,22 @@ app.post('/context', async (req, res) => {
 
       const messages = response.data.messages || [];
 
-      const replies = messages.filter(
-        m => m.direction === 'MO' && m.source_address === phone_number
-      );
+      // const replies = messages.filter(
+      //   m => m.direction === 'MO' && m.source_address === phone_number
+      // );
 
-      const deliveries = messages.filter(
-        m => m.direction === 'MT' && m.destination_address === phone_number
+      
+
+      // const deliveries = messages.filter(
+      //   m => m.direction === 'MT' && m.destination_address === phone_number
+      // );
+      const filtered = messages.filter(msg =>
+        msg.source_address === phone_number || msg.destination_address === phone_number
       );
+  
+      // MO = user replies, MT = assistant messages
+      const replies = filtered.filter(m => m.direction === 'MO');
+      const deliveries = filtered.filter(m => m.direction === 'MT');
 
       const lastReply = replies.at(-1);
       const lastDelivery = deliveries.at(-1);
@@ -131,7 +126,7 @@ app.post('/context', async (req, res) => {
         context.push({
           type: "list",
           label: "Recent Replies",
-          value: replies.slice(-3).map(r => ({
+          value: replies.slice(-80).map(r => ({
             content: r.content || '[no content]',
             date_received: r.timestamp
           }))
@@ -142,7 +137,7 @@ app.post('/context', async (req, res) => {
         context.push({
           type: "list",
           label: "Recent Delivery Reports",
-          value: deliveries.slice(-3).map(d => ({
+          value: deliveries.slice(-80).map(d => ({
             status: d.status_description || 'unknown',
             message_id: d.message_id,
             date_received: d.timestamp
@@ -194,7 +189,7 @@ app.post('/context', async (req, res) => {
       context.push({
         type: "list",
         label: "Recent Replies",
-        value: replies.slice(-3).map(r => ({
+        value: replies.slice(-80).map(r => ({
           content: r.reply_content || r.content || '[no content]',
           date_received: r.date_received || r.received_at
         }))
@@ -205,7 +200,7 @@ app.post('/context', async (req, res) => {
       context.push({
         type: "list",
         label: "Recent Delivery Reports",
-        value: deliveries.slice(-3).map(d => ({
+        value: deliveries.slice(-80).map(d => ({
           status: d.status,
           date_received: d.date_received,
           message_id: d.message_id
@@ -313,10 +308,8 @@ app.post('/webhook/delivery', (req, res) => {
 // 📩 /webhook/reply — log inbound SMS replies
 app.post('/webhook/reply', async (req, res) => {
   try {
-    console.log("the entire reply body",req.body);
     const source_number = req.body.source_address;
     const reply_content = req.body.reply_msg;
-
 
     console.log("📩 Incoming SMS:", { from: source_number, text: reply_content });
 
@@ -356,7 +349,7 @@ app.post('/webhook/reply', async (req, res) => {
     const intent = classify.choices[0].message.content.trim();
     console.log("🔎 GPT intent:", intent);
 
-    // 3. Send the reply back via MessageMedia
+    // 3. Send the reply back via your own /send API
     await axios.post(`${process.env.MCP_SERVER_URL}/send`, {
       messages: [
         {
@@ -368,15 +361,7 @@ app.post('/webhook/reply', async (req, res) => {
       ]
     });
 
-    // 4. Log the interaction with intent
-    logWebhookEvent("reply_auto", {
-      source_number,
-      reply_content,
-      auto_reply: reply,
-      intent
-    });
-
-    res.status(200).send("Reply processed and auto-responded");
+    res.status(200).send("Auto-reply sent via GPT");
   } catch (err) {
     console.error("❌ Error auto-replying to SMS:", err.message);
     res.status(500).send("Failed to auto-reply");
@@ -384,86 +369,60 @@ app.post('/webhook/reply', async (req, res) => {
 });
 
 
+
 app.get('/dashboard', async (req, res) => {
   try {
-    const { phone, search } = req.query;
+    const now = new Date();
+    const start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // past 7 days
 
-    const endDate = new Date().toISOString();
-    const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+    const response = await messageAPI.post('/v2-preview/reporting/messages/detail', {
+      start_date: start.toISOString(),
+      end_date: now.toISOString()
+    });
 
-    const payload = {
-      start_date: startDate,
-      end_date: endDate
-    };
+    const messages = response.data.messages || [];
 
-    const response = await messageAPI.post(
-      `/v2-preview/reporting/messages/detail`,
-      payload
-    );
-
-    let messages = response.data.messages || [];
-
-    // 🔍 Optional filters
-    if (phone) {
-      messages = messages.filter(m =>
-        m.source_address === phone || m.destination_address === phone
-      );
-    }
-
-    if (search) {
-      messages = messages.filter(m =>
-        (m.content || "").toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    const htmlRows = messages.map(entry => {
-      const type = entry.direction === 'MO' ? 'reply' : 'delivery';
-      const content = entry.content || '[no content]';
-      const phoneNum = entry.direction === 'MO' ? entry.source_address : entry.destination_address;
-      const status = entry.status_description || '-';
-      const received = entry.timestamp || '-';
-      const bg = type === 'reply' ? '#e6f7ff' : '#f9f9f9';
+    const rows = messages.map(msg => {
+      const isReply = msg.direction === 'MO';
+      const isDelivery = msg.status?.toLowerCase() === 'delivered' || msg.status;
 
       return `
-        <tr style="background:${bg}">
-          <td>${type}</td>
-          <td>${phoneNum}</td>
-          <td>${content}</td>
-          <td>${status}</td>
-          <td>${received}</td>
-        </tr>`;
+        <tr style="background: ${isReply ? '#e6f7ff' : '#f9f9f9'}">
+          <td>${msg.direction}</td>
+          <td>${msg.source_address || '-'}</td>
+          <td>${msg.destination_address || '-'}</td>
+          <td>${msg.content || '-'}</td>
+          <td>${msg.status || '-'}</td>
+          <td>${msg.message_id || '-'}</td>
+          <td>${msg.received || msg.timestamp || '-'}</td>
+        </tr>
+      `;
     }).join('');
 
     const html = `
       <html>
         <head>
-          <title>📊 SMS Dashboard (Live)</title>
+          <title>📊 Live SMS Dashboard</title>
           <style>
             body { font-family: sans-serif; padding: 1rem; }
-            input { padding: 4px; margin-right: 10px; }
-            table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+            table { border-collapse: collapse; width: 100%; }
             th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
             th { background: #f0f0f0; }
           </style>
         </head>
         <body>
-          <h2>📊 SMS Dashboard</h2>
-          <form method="GET" action="/dashboard">
-            <label>Filter by phone:</label>
-            <input type="text" name="phone" placeholder="+614..." value="${phone || ''}">
-            <label>Search:</label>
-            <input type="text" name="search" placeholder="message content" value="${search || ''}">
-            <button type="submit">Search</button>
-          </form>
+          <h2>📊 Live SMS Log Dashboard (Last 7 Days)</h2>
           <table>
             <tr>
-              <th>Type</th>
-              <th>Phone</th>
-              <th>Message</th>
+              <th>Direction</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Content</th>
               <th>Status</th>
+              <th>Message ID</th>
               <th>Timestamp</th>
             </tr>
-            ${htmlRows}
+            ${rows}
           </table>
         </body>
       </html>
@@ -471,10 +430,11 @@ app.get('/dashboard', async (req, res) => {
 
     res.send(html);
   } catch (err) {
-    console.error("❌ Error in /dashboard:", err.response?.data || err.message);
+    console.error("❌ Error in /dashboard:", err.message || err);
     res.status(500).send("Failed to load dashboard");
   }
 });
+
 
 
 

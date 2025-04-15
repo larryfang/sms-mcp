@@ -400,5 +400,153 @@
     "message": "You're welcome! If you have any other questions or need further help, feel free to ask.",
     "source_number": "+61413868683",
     "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:16.741Z",
+    "message_id": "3803daba-3cd9-477b-8170-ad8ff00a8aef",
+    "message_time": "2025-04-14T11:06:15.668Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "I will be home soon",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:16.764Z",
+    "message_id": "3803daba-3cd9-477b-8170-ad8ff00a8aef",
+    "message_time": "2025-04-14T11:06:15.668Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "I will be home soon",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:17.728Z",
+    "message_id": "3803daba-3cd9-477b-8170-ad8ff00a8aef",
+    "message_time": "2025-04-14T11:06:15.668Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "I will be home soon",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "reply_auto",
+    "timestamp": "2025-04-14T11:06:31.413Z",
+    "source_number": "+61413868683",
+    "reply_content": "Got it",
+    "auto_reply": "Hey there! Sure thing, I'm here to help. What can I assist you with today?",
+    "intent": "other"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:31.718Z",
+    "message_id": "0067d1a8-1f64-425a-ba45-af56b6de120b",
+    "message_time": "2025-04-14T11:06:31.526Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! Sure thing, I'm here to help. What can I assist you with today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:31.751Z",
+    "message_id": "0067d1a8-1f64-425a-ba45-af56b6de120b",
+    "message_time": "2025-04-14T11:06:31.526Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! Sure thing, I'm here to help. What can I assist you with today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:06:32.772Z",
+    "message_id": "0067d1a8-1f64-425a-ba45-af56b6de120b",
+    "message_time": "2025-04-14T11:06:31.526Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Hey there! Sure thing, I'm here to help. What can I assist you with today?",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:24:59.242Z",
+    "message_id": "e6ff3f81-78b2-4ce0-9cc2-8c156229c6ba",
+    "message_time": "2025-04-14T11:24:58.514Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:24:59.250Z",
+    "message_id": "e6ff3f81-78b2-4ce0-9cc2-8c156229c6ba",
+    "message_time": "2025-04-14T11:24:58.514Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:25:01.217Z",
+    "message_id": "e6ff3f81-78b2-4ce0-9cc2-8c156229c6ba",
+    "message_time": "2025-04-14T11:24:58.514Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Larry is right",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:25:38.009Z",
+    "message_id": "91b49463-f31a-4160-9216-d09d34a04500",
+    "message_time": "2025-04-14T11:25:37.229Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Absolutely! If you have any questions or need assistance with anything else, feel free to ask. I'm here to help!",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:25:38.023Z",
+    "message_id": "91b49463-f31a-4160-9216-d09d34a04500",
+    "message_time": "2025-04-14T11:25:37.229Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Absolutely! If you have any questions or need assistance with anything else, feel free to ask. I'm here to help!",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T11:25:38.981Z",
+    "message_id": "91b49463-f31a-4160-9216-d09d34a04500",
+    "message_time": "2025-04-14T11:25:37.229Z",
+    "account_id": "WebTeamTestAccount_0711",
+    "message": "Absolutely! If you have any questions or need assistance with anything else, feel free to ask. I'm here to help!",
+    "source_number": "+61413868683",
+    "destination": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T20:40:14.448Z",
+    "message_id": "5281ba2f-611d-498d-8123-e5d2d0e073d3",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Good morning! This is our first end to end test of MCP with Claude for Desktop.",
+    "reply_content": "$moContent",
+    "source_number": "+6421752588",
+    "destination_number": "$destinationAddress"
+  },
+  {
+    "type": "delivery",
+    "timestamp": "2025-04-14T20:40:21.433Z",
+    "message_id": "5281ba2f-611d-498d-8123-e5d2d0e073d3",
+    "account_id": "WebTeamTestAccount0001",
+    "message_content": "Good morning! This is our first end to end test of MCP with Claude for Desktop.",
+    "reply_content": "$moContent",
+    "source_number": "+6421752588",
+    "destination_number": "$destinationAddress"
   }
 ]

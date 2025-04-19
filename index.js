@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/doc', express.static(path.join(__dirname, 'doc')));
 app.use('/conversations', express.static(path.join(__dirname, 'conversations')));
 
 const PORT = process.env.PORT || 3000;

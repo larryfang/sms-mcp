@@ -124,6 +124,10 @@ The AI-Native SMS Assistant is designed to facilitate seamless SMS communication
 - Context Retrieval → via `/context`
 - Logs UI → via `/dashboard`
 - Chat + Function Calls → via `/chat.html`
+### API Contract
+This MCP server is OpenAPI 3.0 compliant.
+→ [View the OpenAPI Spec](./openapi/openapi-mcp-spec.json)
+
 
 ---
 

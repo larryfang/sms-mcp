@@ -80,6 +80,7 @@ const webhookLogPath = path.join(__dirname, 'webhook-log.json');
 
 
 app.post('/context', async (req, res) => {
+  console.log("context being called");
   const { phone_number, use_live_data = true } = req.body;
 
   if (!phone_number) {
@@ -87,59 +88,60 @@ app.post('/context', async (req, res) => {
   }
 
   try {
-    // ⏱️ Lookback period (last 7 days)
     const endDate = new Date().toISOString();
     const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
     if (use_live_data) {
       const payload = { start_date: startDate, end_date: endDate };
-
-      const response = await messageAPI.post(
-        `/v2-preview/reporting/messages/detail`,
-        payload
-      );
-
+      const response = await messageAPI.post(`/v2-preview/reporting/messages/detail`, payload);
       const messages = response.data.messages || [];
 
-      // const replies = messages.filter(
-      //   m => m.direction === 'MO' && m.source_address === phone_number
-      // );
-
-      
-
-      // const deliveries = messages.filter(
-      //   m => m.direction === 'MT' && m.destination_address === phone_number
-      // );
       const filtered = messages.filter(msg =>
         msg.source_address === phone_number || msg.destination_address === phone_number
       );
-  
+
       // MO = user replies, MT = assistant messages
-      const replies = filtered.filter(m => m.direction === 'MO');
-      const deliveries = filtered.filter(m => m.direction === 'MT');
+      const replies = filtered.filter(
+        m => m.direction === 'MO' && m.source_address === phone_number && m.content?.trim()
+      );
 
-      const lastReply = replies.at(-1);
-      const lastDelivery = deliveries.at(-1);
+      const deliveries = filtered.filter(
+        m => m.direction === 'MT' && m.destination_address === phone_number
+      );
 
+      replies.forEach((reply, index) => {
+        console.log(`📩 Reply [${index}]:`, {
+          content: reply.content,
+          timestamp: reply.timestamp,
+          direction: reply.direction,
+          source: reply.source_address,
+          destination: reply.destination_address,
+          message_id: reply.message_id,
+        });
+      });
+      
+      const lastReply = replies.at(0);
+      const lastDelivery = deliveries.at(0);
       const context = [];
 
       if (replies.length > 0) {
         context.push({
           type: "list",
           label: "Recent Replies",
-          value: replies.slice(-80).map(r => ({
+          value: replies.slice(-100).map(r => ({
             content: r.content || '[no content]',
             date_received: r.timestamp
           }))
         });
       }
 
+
       if (deliveries.length > 0) {
         context.push({
           type: "list",
           label: "Recent Delivery Reports",
-          value: deliveries.slice(-80).map(d => ({
-            status: d.status_description || 'unknown',
+          value: deliveries.slice(-100).map(d => ({
+            status: d.status_description || d.status || 'unknown',
             message_id: d.message_id,
             date_received: d.timestamp
           }))
@@ -147,7 +149,7 @@ app.post('/context', async (req, res) => {
       }
 
       const lastReplyText = lastReply?.content || "None";
-      const lastDeliveryStatus = lastDelivery?.status_description || "N/A";
+      const lastDeliveryStatus = lastDelivery?.status_description || lastDelivery?.status || "N/A";
 
       const summary = `${phone_number} has ${replies.length} reply(ies) and ${deliveries.length} delivery report(s). Last reply: "${lastReplyText}" Last delivery status: ${lastDeliveryStatus}.`;
 
@@ -169,7 +171,7 @@ app.post('/context', async (req, res) => {
       });
     }
 
-    // fallback: legacy local log mode
+    // Legacy fallback mode (webhook-log.json)
     const logFile = path.join(__dirname, 'webhook-log.json');
     if (!fs.existsSync(logFile)) {
       return res.status(200).json({ summary: 'No logs yet.', context: [] });
@@ -181,8 +183,8 @@ app.post('/context', async (req, res) => {
     const replies = filtered.filter(e => e.type === 'reply');
     const deliveries = filtered.filter(e => e.type === 'delivery');
 
-    const lastReply = replies.at(-1);
-    const lastDelivery = deliveries.at(-1);
+    const lastReply = replies.at(0);
+    const lastDelivery = deliveries.at(0);
 
     const context = [];
 
@@ -190,7 +192,7 @@ app.post('/context', async (req, res) => {
       context.push({
         type: "list",
         label: "Recent Replies",
-        value: replies.slice(-80).map(r => ({
+        value: replies.slice(-100).map(r => ({
           content: r.reply_content || r.content || '[no content]',
           date_received: r.date_received || r.received_at
         }))
@@ -201,7 +203,7 @@ app.post('/context', async (req, res) => {
       context.push({
         type: "list",
         label: "Recent Delivery Reports",
-        value: deliveries.slice(-80).map(d => ({
+        value: deliveries.slice(-100).map(d => ({
           status: d.status,
           date_received: d.date_received,
           message_id: d.message_id
@@ -230,11 +232,13 @@ app.post('/context', async (req, res) => {
       context,
       prompt_guidance
     });
+
   } catch (err) {
     console.error("Error in /context:", err.response?.data || err.message || err);
     return res.status(500).json({ error: "Failed to generate context" });
   }
 });
+
 
 function saveConversation(phone, role, message, intent) {
   if (!phone) return;

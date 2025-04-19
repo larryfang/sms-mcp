@@ -128,6 +128,33 @@ The AI-Native SMS Assistant is designed to facilitate seamless SMS communication
 This MCP server is OpenAPI 3.0 compliant.
 → [View the OpenAPI Spec](./openapi/openapi-mcp-spec.json)
 
+## 🧠 LangChain Integration
+
+This MCP server includes native LangChain support with two built-in tools:
+
+| Tool Name         | Description                                      |
+|-------------------|--------------------------------------------------|
+| `get_sms_context` | Retrieves SMS reply/delivery history for a number |
+| `send_sms`        | Sends a message to a phone number via MCP server |
+
+### 📦 Prerequisites
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install langchain langchain-community openai requests python-dotenv
+
+🚀 Run the Agent
+
+python langchain_mcp_agent.py
+
+🧪 Example Prompts
+Did +6141*** reply after our last message?
+
+What’s the SMS history for +61413868683?
+
+Send +6141***::Hey, just checking in.
 
 ---
 

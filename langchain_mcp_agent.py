@@ -3,7 +3,14 @@ import requests
 from langchain.agents import Tool, initialize_agent
 from langchain.agents.agent_types import AgentType
 from langchain.chat_models import ChatOpenAI
-print("✅ Script started")
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,  # Change to DEBUG for more detail
+    format='%(asctime)s [%(levelname)s] %(message)s'
+)
+
+
 MCP_SERVER = os.getenv("MCP_SERVER_URL", "http://localhost:3000")
 
 
@@ -11,9 +18,31 @@ MCP_SERVER = os.getenv("MCP_SERVER_URL", "http://localhost:3000")
 def get_sms_context_tool(input: str) -> str:
     res = requests.post(f"{MCP_SERVER}/context", json={"phone_number": input})
     if res.status_code != 200:
-        return f"Failed to retrieve context: {res.text}"
+        return f"❌ Failed to retrieve context: {res.text}"
+
     data = res.json()
-    return data.get("summary") or "No context found."
+    summary = data.get("summary", "No summary available.")
+    prompt = data.get("prompt_context", "")
+    replies = data.get("context", [])
+
+
+    reply_block = ""
+    for section in replies:
+        label = section.get("label", "Context")
+        lines = "\n".join(
+            f"- {v.get('content') or v.get('status') or '[no content]'}  ({v.get('date_received', 'no date')})"
+            if isinstance(v, dict) else f"- {v}"
+            for v in section.get("value", [])
+        )
+        reply_block += f"\n📌 {label}:\n{lines}\n"
+
+    return f"""📬 SMS Summary for {input}:
+{summary}
+
+🧠 GPT Prompt Context: {prompt}
+{reply_block}"""
+
+
 
 # Tool: Send SMS
 def send_sms_tool(input: str) -> str:

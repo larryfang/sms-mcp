@@ -1,193 +1,197 @@
+# MessageMedia MCP Server (V1)
 
-# 📱 AI-Native SMS Assistant (V1)
-
-An AI-powered SMS assistant that integrates with MessageMedia to send, receive, and manage SMS conversations. Built with Node.js and OpenAI's GPT-4, it provides real-time context-aware messaging and a user-friendly dashboard.
+A fully AI-native **MCP (Model Context Protocol) server** for SMS communication using the [MessageMedia](https://messagemedia.com) API — designed to integrate with GPT tools like OpenAI, LangChain, Claude, and CRM systems (Zendesk, HubSpot, Salesforce, etc.).
 
 ---
 
 ## 🚀 Features
 
-- **Send SMS**: Send messages via the `/send` endpoint.
-- **Receive & Auto-Reply**: Handle incoming messages with GPT-generated responses.
-- **Contextual Insights**: Retrieve conversation context through the `/context` endpoint.
-- **Dashboard**: Visualize message logs and statuses.
-- **Chat Interface**: Interact with the assistant via a web-based chat UI.
-- **Function Schema**: OpenAI-compatible function schema for integration.
+- ✅ Send and receive SMS with MessageMedia
+- ✅ Auto-reply with GPT-4 to incoming SMS
+- ✅ Webhook handling for delivery + reply logs
+- ✅ `/context` endpoint to retrieve SMS history as GPT-usable context
+- ✅ OpenAPI + MCP schema for tool-based LLM integrations
+- ✅ LangChain Agent ready (Tool calling support)
+- ✅ Chat UI frontend (`chat.html`)
+- ✅ Visual dashboards (`/dashboard`, `/inbox`)
+- ✅ Fully Dockerized for local or cloud deployment
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Getting Started
 
-1. **Clone the repository**:
-
-   ```bash
-   git clone https://github.com/larryfang/sms-mcp
-   cd sms-mcp
-   ```
-
-2. **Install dependencies**:
-
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**:
-
-   Create a `.env` file in the root directory and add the following:
-
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
-   MESSAGE_API_KEY=your_messagemedia_api_key
-   MESSAGE_API_SECRET=your_messagemedia_api_secret
-   MESSAGE_BASE_URL=https://api.messagemedia.com
-   MCP_SERVER_URL=http://localhost:3000
-   ```
-
-4. **Start the server**:
-
-   ```bash
-   node index.js
-   ```
-
-   The server will be running at `http://localhost:3000`.
-
----
-
-## 🧪 Usage
-
-- **Send SMS**:
-
-  ```bash
-  POST /send
-  {
-    "messages": [
-      {
-        "destination_number": "+61400000000",
-        "content": "Hello, this is a test message."
-      }
-    ]
-  }
-  ```
-
-- **Retrieve Context**:
-
-  ```bash
-  POST /context
-  {
-    "phone_number": "+61400000000"
-  }
-  ```
-
-- **Access Dashboard**:
-
-  Navigate to `http://localhost:3000/dashboard` to view message logs.
-
-- **Chat Interface**:
-
-  Open `http://localhost:3000/chat.html` in your browser to interact with the assistant.
-
----
-
-## 📂 Project Structure
-
-- `index.js`: Main server file with route implementations.
-- `public/`: Static files including `chat.html`.
-- `conversations/`: Stored conversation logs per user.
-- `webhook-log.json`: Logs of incoming and outgoing messages.
-
----
-
-## 🏗️ Architecture
-
-### Overview
-
-The AI-Native SMS Assistant is designed to facilitate seamless SMS communication by integrating OpenAI's GPT-4 for intelligent responses and MessageMedia for message delivery.
-
-### Components
-
-1. **Express Server (`index.js`)**
-   - Endpoints: `/send`, `/context`, `/webhook/reply`, `/webhook/delivery`, `/dashboard`, `/meta`, `/function-schema`.
-
-2. **OpenAI Integration**
-   - Generates context-aware responses and classifies user intents.
-
-3. **MessageMedia Integration**
-   - Sends and receives SMS messages and delivery reports.
-
-4. **Chat Interface (`public/chat.html`)**
-   - Web-based interface for interacting with the assistant.
-
-### Data Flow
-
-- Sending Messages → via `/send`
-- Receiving & Auto-reply → via `/webhook/reply`
-- Context Retrieval → via `/context`
-- Logs UI → via `/dashboard`
-- Chat + Function Calls → via `/chat.html`
-### API Contract
-This MCP server is OpenAPI 3.0 compliant.
-→ [View the OpenAPI Spec](./openapi/openapi-mcp-spec.json)
-
-## 🧠 LangChain Integration
-
-This MCP server includes native LangChain support with two built-in tools:
-
-| Tool Name         | Description                                      |
-|-------------------|--------------------------------------------------|
-| `get_sms_context` | Retrieves SMS reply/delivery history for a number |
-| `send_sms`        | Sends a message to a phone number via MCP server |
-
-### 📦 Prerequisites
-
+### 1. Install Dependencies
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install langchain langchain-community openai requests python-dotenv
+npm install
+pip install -r requirements.txt
+```
 
-🚀 Run the Agent
+### 2. Create a `.env` File
+```env
+PORT=3000
+OPENAI_API_KEY=sk-...
+MESSAGE_API_KEY=...
+MESSAGE_API_SECRET=...
+MESSAGE_BASE_URL=https://api.messagemedia.com
+MESSAGE_SUB_ACCOUNT_ID=optional
+MCP_SERVER_URL=http://localhost:3000
+CHAT_PORT=4000
+```
 
+---
+
+## 🧪 Local Development
+
+### MCP Server (SMS context, /send, /webhooks)
+```bash
+node index.js
+```
+
+### OpenAI Router Server (/chat)
+```bash
+node Openai-router.js
+```
+
+---
+
+## 🐳 Docker Support
+
+### Dockerfile
+Build the container:
+```bash
+docker build -t mcp-server .
+```
+
+Run:
+```bash
+docker run --env-file .env -p 3000:3000 -p 4000:4000 mcp-server
+```
+
+---
+
+## 🧠 LangChain Integration (GPT Agent with Tools)
+
+This project includes a LangChain-based GPT agent that can both:
+
+- `get_sms_context`: Retrieve recent SMS replies and delivery history for a phone number.
+- `send_sms`: Send a new SMS message to a phone number.
+
+### 🔧 Tool Functions
+
+| Tool Name        | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| get_sms_context  | Fetch SMS reply and delivery context for a given phone number              |
+| send_sms         | Send an SMS using format: `+61412345678::Your message here`                |
+
+### ▶️ How to Use
+
+1. Ensure you have `langchain`, `openai`, `requests`, and `langchain-openai` installed:
+```bash
+pip install -U langchain langchain-openai langchain-community openai requests
+```
+
+2. Set environment variables in `.env`:
+```env
+OPENAI_API_KEY=your-openai-key
+MCP_SERVER_URL=http://localhost:3000
+```
+
+3. Run the agent script:
+```bash
 python langchain_mcp_agent.py
+```
 
-🧪 Example Prompts
-Did +6141*** reply after our last message?
-
-What’s the SMS history for +61413868683?
-
-Send +6141***::Hey, just checking in.
-
----
-
-## 🎬 Demo Script
-
-### Duration: ~5 minutes
-
-#### ✅ Introduction
-
-"Welcome to the AI-Native SMS Assistant demo. Today, we'll showcase how this assistant streamlines SMS communications using OpenAI's GPT-4 and MessageMedia."
-
-#### ✅ Sending an SMS
-
-"We'll use the `/send` endpoint to dispatch a greeting to a user."
-
-#### ✅ Receiving and Auto-Replying
-
-"Simulate an incoming message. The assistant processes it and replies intelligently."
-
-#### ✅ Retrieving Conversation Context
-
-"Use the `/context` endpoint to view message history and delivery reports."
-
-#### ✅ Exploring the Dashboard
-
-"Visit `/dashboard` to explore message logs visually."
-
-#### ✅ Chat Interface
-
-"Interact naturally via `chat.html`. It detects phone numbers, triggers GPT tools, and shows results contextually."
+4. Ask natural language questions like:
+```
+Did +61412345678 reply to our last message?
+Send a message to +61412345678 saying “Thanks for confirming.”
+```
 
 ---
 
-## 📄 License
+## 💬 Web Chat UI
 
-MIT License
+Open `public/chat.html` to test the MCP server via GPT in your browser.
+
+You can type questions like:
+- “Who replied last to +61412345678?”
+- “Send ‘hello’ to +61413868683”
+
+---
+
+## 📊 Dashboards
+
+- `/dashboard`: View logs of SMS delivery and replies
+- `/inbox`: Browse full conversation history per number
+
+---
+
+## 🧾 OpenAPI + MCP Schema
+
+- `/meta`: MCP server capabilities
+- `/function-schema`: Function-call compatible schema for OpenAI
+- `/openapi-mcp-spec.json`: OpenAPI definition
+
+---
+
+## 📦 Folder Structure
+
+```
+├── index.js                 # MCP server (core)
+├── Openai-router.js         # /chat endpoint using OpenAI functions
+├── langchain_mcp_agent.py   # Python LangChain agent
+├── ai_sms_agent.py          # GPT-powered scratch agent with no dependency
+├── public/
+│   └── chat.html            # Frontend UI
+├── conversations/           # Logs per phone number
+├── webhook-log.json         # Delivery & reply webhook logs
+├── Dockerfile / .env        # Deployment configs
+```
+
+---
+
+## 🤖 Build-Your-Own AI Agent (From Scratch)
+
+This project includes `ai_sms_agent.py`, a clean Python GPT agent that directly integrates with your MCP server using OpenAI.
+
+### Features
+
+- Understands natural language like:
+  - “Did +61413868683 reply to our last message?”
+  - “Send ‘Thanks’ to +61413868683”
+- GPT decides the right tool and arguments
+- Calls `/context` or `/send` as needed
+
+### ✅ How to Use
+
+1. Install required packages:
+```bash
+pip install openai requests python-dotenv
+```
+
+2. Set `.env` with:
+```env
+OPENAI_API_KEY=sk-...
+MCP_SERVER_URL=http://localhost:3000
+```
+
+3. Run the agent:
+```bash
+python ai_sms_agent.py
+```
+
+4. Start chatting:
+```
+User: Show me SMS history of +61412345678
+🤖 GPT: [calls /context and replies with summary]
+
+User: Send message to +61412345678 saying "Your delivery is confirmed"
+🤖 GPT: [calls /send and confirms]
+```
+
+This agent is fully decoupled from LangChain or frontends and serves as a backend intelligence layer that could power:
+
+- Slack bots
+- Web assistants
+- Phone line AI copilots
+- CRM sidebar AI widgets

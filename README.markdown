@@ -115,7 +115,7 @@ Open `public/chat.html` to test the MCP server via GPT in your browser.
 
 You can type questions like:
 - “Who replied last to +61412345678?”
-- “Send ‘hello’ to +61413868683”
+- “Send ‘hello’ to +6141***”
 
 ---
 
@@ -157,8 +157,8 @@ This project includes `ai_sms_agent.py`, a clean Python GPT agent that directly 
 ### Features
 
 - Understands natural language like:
-  - “Did +61413868683 reply to our last message?”
-  - “Send ‘Thanks’ to +61413868683”
+  - “Did +6141*** reply to our last message?”
+  - “Send ‘Thanks’ to +6141***”
 - GPT decides the right tool and arguments
 - Calls `/context` or `/send` as needed
 

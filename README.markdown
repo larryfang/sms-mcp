@@ -195,3 +195,43 @@ This agent is fully decoupled from LangChain or frontends and serves as a backen
 - Web assistants
 - Phone line AI copilots
 - CRM sidebar AI widgets
+---
+
+## 📊 SMS Report Dashboard
+
+This release adds a new `/report` endpoint and an HTML dashboard `sms_report_live_dashboard.html` that visualizes inbound and outbound SMS traffic with a high bar chart.
+
+### Features:
+- Uses real-time data via the `/report` endpoint
+- Fetches data dynamically from the MessageMedia reporting API
+- Displays SMS activity broken down by date
+- Interactive bar chart powered by Chart.js
+
+### How to View:
+Start the server and navigate to:
+```
+http://localhost:3000/sms_report_live_dashboard.html
+```
+
+---
+
+## 🏗️ Updated Architecture Overview
+
+### Components:
+- **index.js**: Core MCP server routing `/send`, `/context`, `/report`, `/meta`, and webhook handling.
+- **Openai-router.js**: Handles GPT-powered assistant logic and tool execution.
+- **sms_report_live_dashboard.html**: Visual report interface fetching live data from `/report`.
+- **langchain_mcp_agent.py**: Python-based agent with integrated tools using LangChain.
+- **MessageMedia API**: Source of truth for real SMS history.
+
+### Endpoints:
+- `/send`: Sends outbound SMS.
+- `/context`: Fetches context based on SMS history (live via MessageMedia).
+- `/report`: Aggregates inbound/outbound stats by date.
+- `/meta` and `/function-schema`: MCP spec compliance for tool discovery.
+
+### Tools:
+- `get_sms_context`: Exposes reply/delivery history.
+- `send_sms`: Allows agent to initiate communication.
+
+---

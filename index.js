@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const { OpenAI } = require('openai');
 
@@ -5,7 +6,7 @@ const { OpenAI } = require('openai');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const app = express();
 app.use(express.json());
@@ -80,7 +81,7 @@ const webhookLogPath = path.join(__dirname, 'webhook-log.json');
 
 
 app.post('/context', async (req, res) => {
-  console.log("context being called");
+  console.error("context being called");
   const { phone_number, use_live_data = true } = req.body;
 
   if (!phone_number) {
@@ -110,7 +111,7 @@ app.post('/context', async (req, res) => {
       );
 
       replies.forEach((reply, index) => {
-        console.log(`📩 Reply [${index}]:`, {
+        console.error(`📩 Reply [${index}]:`, {
           content: reply.content,
           timestamp: reply.timestamp,
           direction: reply.direction,
@@ -300,7 +301,7 @@ function logWebhookEvent(type, data) {
 
 // 📬 /webhook/delivery — log delivery status updates
 app.post('/webhook/delivery', (req, res) => {
-  console.log('📬 Delivery webhook received:', req.body);
+  console.error('📬 Delivery webhook received:', req.body);
   try {
     logWebhookEvent('delivery', req.body);
     res.status(200).send('OK');
@@ -316,7 +317,7 @@ app.post('/webhook/reply', async (req, res) => {
     const source_number = req.body.source_address;
     const reply_content = req.body.reply_msg;
 
-    console.log("📩 Incoming SMS:", { from: source_number, text: reply_content });
+    console.error("📩 Incoming SMS:", { from: source_number, text: reply_content });
 
     // 1. Generate the GPT reply
     const gptResponse = await openai.chat.completions.create({
@@ -334,7 +335,7 @@ app.post('/webhook/reply', async (req, res) => {
     });
 
     const reply = gptResponse.choices[0].message.content.trim();
-    console.log("🤖 GPT reply:", reply);
+    console.error("🤖 GPT reply:", reply);
 
     // 2. Classify intent
     const classify = await openai.chat.completions.create({
@@ -352,7 +353,7 @@ app.post('/webhook/reply', async (req, res) => {
     });
 
     const intent = classify.choices[0].message.content.trim();
-    console.log("🔎 GPT intent:", intent);
+    console.error("🔎 GPT intent:", intent);
 
     // 3. Send the reply back via your own /send API
     await axios.post(`${process.env.MCP_SERVER_URL}/send`, {
@@ -442,6 +443,40 @@ app.get('/dashboard', async (req, res) => {
 
 
 
+app.get('/report', async (req, res) => {
+  try {
+    const endDate = new Date().toISOString();
+    const startDate = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
+
+    const response = await messageAPI.post('/v2-preview/reporting/messages/detail', {
+      start_date: startDate,
+      end_date: endDate
+    });
+
+    const messages = response.data.messages || [];
+
+    // Parse and aggregate
+    const dailyStats = {};
+
+    for (const msg of messages) {
+      const date = new Date(msg.timestamp).toISOString().split('T')[0];
+      if (!dailyStats[date]) {
+        dailyStats[date] = { date, Inbound: 0, Outbound: 0 };
+      }
+      if (msg.direction === 'MO') {
+        dailyStats[date].Inbound += 1;
+      } else if (msg.direction === 'MT') {
+        dailyStats[date].Outbound += 1;
+      }
+    }
+
+    const summary = Object.values(dailyStats).sort((a, b) => new Date(a.date) - new Date(b.date));
+    res.json({ summary });
+  } catch (err) {
+    console.error("Error in /report:", err.response?.data || err.message || err);
+    res.status(500).json({ error: 'Failed to generate report' });
+  }
+});
 
 // MCP schema metadata
 app.get('/meta', (req, res) => {
@@ -494,5 +529,5 @@ app.get('/function-schema', (req, res) => {
 
 // 🔊 Start server
 app.listen(PORT, () => {
-  console.log(`✅ MCP server listening on http://localhost:${PORT}`);
+  console.error(`✅ MCP server listening on http://localhost:${PORT}`);
 });

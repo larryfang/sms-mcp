@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SMS Volume Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f8f9fa;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    #chart-container {
+      width: 90%;
+      max-width: 1200px;
+      height: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    canvas {
+      width: 100% !important;
+      height: 500px !important;
+    }
+  </style>
+</head>
+<body>
+  <h2>📊 SMS Volume by Day</h2>
+  <div id="chart-container">
+    <canvas id="smsChart"></canvas>
+  </div>
+
+  <script>
+    async function loadChartData() {
+      const res = await fetch('/report');
+      const { summary: data } = await res.json();
+
+      const labels = data.map(row => row.date);
+      const inbound = data.map(row => row.Inbound);
+      const outbound = data.map(row => row.Outbound);
+
+      const ctx = document.getElementById('smsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Inbound',
+              data: inbound,
+              backgroundColor: 'rgba(54, 162, 235, 0.7)'
+            },
+            {
+              label: 'Outbound',
+              data: outbound,
+              backgroundColor: 'rgba(255, 99, 132, 0.7)'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { stacked: true },
+            y: { stacked: true, beginAtZero: true }
+          },
+          plugins: {
+            legend: {
+              position: 'top'
+            },
+            title: {
+              display: true,
+              text: 'Daily Inbound and Outbound SMS Volume'
+            }
+          }
+        }
+      });
+    }
+
+    loadChartData();
+  </script>
+</body>
+</html>

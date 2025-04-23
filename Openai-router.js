@@ -1,8 +1,7 @@
-
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const { OpenAI } = require('openai');
-require('dotenv').config();
 
 const app = express();
 const cors = require('cors');
@@ -126,5 +125,5 @@ ${data.summary}`;
 });
 
 app.listen(PORT, () => {
-  console.log(`🤖 OpenAI Chat API running at http://localhost:${PORT}/chat`);
+  console.error(`🤖 OpenAI Chat API running at http://localhost:${PORT}/chat`);
 });

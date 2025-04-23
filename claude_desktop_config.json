@@ -1,0 +1,53 @@
+{
+    "name": "MessageMedia MCP Server",
+    "description": "A tool to fetch and send SMS context from MessageMedia",
+    "tools": [
+      {
+        "name": "get_sms_context",
+        "description": "Get SMS reply and delivery history for a phone number.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "phone_number": {
+              "type": "string",
+              "description": "Phone number in E.164 format (e.g. +61412345678)"
+            }
+          },
+          "required": ["phone_number"]
+        },
+        "endpoint": {
+          "url": "http://localhost:3000/context",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      },
+      {
+        "name": "send_sms",
+        "description": "Send a new SMS message to a user.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "destination_number": {
+              "type": "string",
+              "description": "Phone number to send SMS to"
+            },
+            "content": {
+              "type": "string",
+              "description": "The text message to send"
+            }
+          },
+          "required": ["destination_number", "content"]
+        },
+        "endpoint": {
+          "url": "http://localhost:3000/send",
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      }
+    ]
+  }
+  

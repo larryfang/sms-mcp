@@ -54,10 +54,10 @@ const mcpFunction = {
       ]
     });
 
-    console.log("\n🔁 GPT-4 Final Response:\n");
-    console.log(finalResponse.choices[0].message.content);
+    console.error("\n🔁 GPT-4 Final Response:\n");
+    console.error(finalResponse.choices[0].message.content);
   } else {
     // No function call needed
-    console.log("\nGPT-4 Response:\n", message.content);
+    console.error("\nGPT-4 Response:\n", message.content);
   }
 })();

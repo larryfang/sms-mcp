@@ -34,6 +34,23 @@ const tools = [
   {
     type: "function",
     function: {
+      name: "show_sms_report",
+      description: "Display SMS report chart for a given phone number",
+      parameters: {
+        type: "object",
+        properties: {
+          phone_number: {
+            type: "string",
+            description: "Phone number to show SMS report for (E.164 format)"
+          }
+        },
+        required: ["phone_number"]
+      }
+    }
+  },
+  {
+    type: "function",
+    function: {
       name: "send_sms",
       description: "Send an SMS to a user",
       parameters: {
@@ -93,9 +110,15 @@ app.post("/chat", async (req, res) => {
       data = ctxRes.data;
       reply = `Here's the SMS context:
 
-${data.summary}`;
+      ${data.summary}`;
       metadata = { phone_number: args.phone_number };
     }
+    if (name === "show_sms_report") {
+      reply = `📊 Report for ${args.phone_number}:\n<iframe src="/sms_report_live_dashboard.html?phone=${args.phone_number}" style="width:100%; height:500px; border:none;"></iframe>`;
+      data = { iframe: true };
+    }
+    
+    
 
     if (name === "send_sms") {
       const sendRes = await axios.post(`${MCP_SERVER_URL}/send`, {

@@ -120,7 +120,7 @@ app.post('/context', async (req, res) => {
           message_id: reply.message_id,
         });
       });
-      
+
       const lastReply = replies.at(0);
       const lastDelivery = deliveries.at(0);
       const context = [];
@@ -484,7 +484,20 @@ app.get('/meta', (req, res) => {
     service: "messagemedia.sms",
     description: "SMS history and delivery context for phone numbers",
     context_types: ["phone_number"],
-    capabilities: ["send_sms", "get_sms_context"]
+    capabilities: ["send_sms", "get_sms_context", "get_sms_report"],
+    version: "1.0.0",
+    protocols: {
+      http: {
+        endpoints: {
+          context: "/context",
+          meta: "/meta",
+          schema: "/function-schema"
+        }
+      }
+    },
+    rate_limits: {
+      requests_per_minute: 60  // if you have any
+    }
   });
 });
 
